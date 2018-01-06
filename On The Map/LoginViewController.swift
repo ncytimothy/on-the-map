@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  On The Map
 //
 //  Created by Timothy Ng on 1/6/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
