@@ -22,3 +22,8 @@ struct Constants {
 struct Methods {
     static let AuthenticationSessionNew = "/session"
 }
+
+struct User {
+    static var username: String? = nil
+    static var password: String? = nil
+}

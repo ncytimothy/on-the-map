@@ -65,8 +65,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="email" destination="3KV-KT-Nu1" id="3oG-hw-Z5C"/>
-                        <outlet property="password" destination="iN0-Qj-Wtb" id="9FW-3V-gSr"/>
+                        <outlet property="emailTextfield" destination="3KV-KT-Nu1" id="IZb-BC-rxo"/>
+                        <outlet property="passwordTextfield" destination="iN0-Qj-Wtb" id="hkb-Pj-blU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

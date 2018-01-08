@@ -15,9 +15,8 @@ class OTMClient: NSObject {
     // Shared session (default)
     var session = URLSession.shared
     
-    
-    
-    
+
+
     // MARK: GET
     func taskForGETMethod() {
         

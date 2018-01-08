@@ -18,8 +18,8 @@ class LoginViewController: UIViewController {
     
 
     //MARK: Outlets
-    @IBOutlet weak var email: UITextField!
-    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var emailTextfield: UITextField!
+    @IBOutlet weak var passwordTextfield: UITextField!
     
     
     override func viewDidLoad() {
@@ -53,11 +53,19 @@ class LoginViewController: UIViewController {
 
     @IBAction func loginPressed(_ sender: Any) {
         
-        getSessionID()
+        User.username = emailTextfield.text
+        User.password = passwordTextfield.text
+        
+        
+       
         
     }
     
+    
+    
     func getSessionID() {
+        
+        
         
         var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
         request.httpMethod = "POST"
