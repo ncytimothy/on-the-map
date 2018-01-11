@@ -45,12 +45,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginPressed(_ sender: Any) {
         
         userDidTapView(self)
-    
-        guard (reachability.connection != .none) else {
-            print("No internet connection!")
-            return
-        }
-        
+            
         if emailTextfield.text!.isEmpty || passwordTextfield.text!.isEmpty {
             debugLabel.text = "Username or Password Empty."
             let alert = UIAlertController(title: "Whoops!", message: "Empty Email or Password", preferredStyle: .alert)
@@ -59,7 +54,14 @@ class LoginViewController: UIViewController {
             
         } else {
             setUIEnabled(false)
-        
+            
+            /* Is internet connection available? */
+            guard (reachability.connection != .none) else {
+                print("No internet connection!")
+                presentUnreachableAlert()
+                return
+            }
+            
             OTMClient.sharedInstance().authenticateWithViewController(self, emailTextfield.text!, passwordTextfield.text!) { (success, errorString) in
                 
                 if success {
@@ -144,23 +146,6 @@ private extension LoginViewController {
             print("Unable to start notifier")
         }
     }
-    
-    // MARK: Check reachability at Login
-//    private func reachableAtLogin() -> Bool {
-//        reachability.whenReachable = { _ in
-//            print("Network reachable")
-//        }
-//
-//        reachability.whenUnreachable = { _ in
-//            self.presentUnreachableAlert()
-//        }
-//
-//        do {
-//            try reachability.startNotifier()
-//        } catch {
-//            print("Unable to start notifier")
-//        }
-//    }
     
     // MARK: Reachability Alert Controller
     private func presentUnreachableAlert() {
