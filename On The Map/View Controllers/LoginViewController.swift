@@ -16,14 +16,13 @@ class LoginViewController: UIViewController {
     var appDelegate: AppDelegate!
     let reachability = Reachability()!
    
-    
-
-    //MARK: Outlets
+    // MARK: Outlets
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     
+    // MARK: Life cycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,39 +38,7 @@ class LoginViewController: UIViewController {
     
     }
     
-    // MARK: Network Reachability
-    
-    func isReachable() {
-        reachability.whenReachable = { _ in
-            print("I love Veronica")
-        }
-        
-        reachability.whenUnreachable = { _ in
-           self.presentUnreachableAlert()
-        }
-        
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
-        }
-    }
-    
-    private func reachableAtLogin() -> Bool {
-        reachability.whenReachable = {_ in
-            return true
-        }
-        return false
-    }
-
-    private func presentUnreachableAlert() {
-        let alert = UIAlertController(title: "No internet connection", message: "Please check your internet connection settings.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: {_ in
-            NSLog("The \"Unreachable\" alert occured.")
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
+    // MARK: Actions
     
     @IBAction func loginPressed(_ sender: Any) {
         
@@ -114,34 +81,9 @@ class LoginViewController: UIViewController {
 //        let controller = storyboard?.instantiateViewController(withIdentifier: <#T##String#>)
 //    }
 
-    
-    
-    
-    
-    func getSessionID() {
-        
-        
-        
-        var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"udacity\": {\"username\": \"timothy2009good@gmail.com\", \"password\": \"Tim1018@\"}}".data(using: .utf8)
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            if error != nil { // Handle error…
-                return
-            }
-            let range = Range(5..<data!.count)
-            let newData = data?.subdata(in: range) /* subset response data! */
-            print(String(data: newData!, encoding: .utf8)!)
-        }
-        task.resume()
-    }
 }
-
+    
 // MARK: - LoginViewController (UITextFieldDelegate)
-
 extension LoginViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -158,7 +100,6 @@ extension LoginViewController: UITextFieldDelegate {
 }
 
 // MARK: - LoginViewController (Configure UI)
-
 private extension LoginViewController {
     
     func setUIEnabled(_ enabled: Bool) {
@@ -176,6 +117,47 @@ private extension LoginViewController {
         }
         
     }
+}
+
+// MARK: - LoginViewController (Network Reachability)
+private extension LoginViewController {
+    
+    // MARK: Network Reachability
+    
+    // MARK: Check reachability at viewWillAppear
+    func isReachable() {
+        reachability.whenReachable = { _ in
+           
+        }
+        
+        reachability.whenUnreachable = { _ in
+            self.presentUnreachableAlert()
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+    }
+    
+    // MARK: Check reachability at Login
+    private func reachableAtLogin() -> Bool {
+        reachability.whenReachable = {_ in
+            return true
+        }
+        return false
+    }
+    
+    // MARK: Reachability Alert Controller
+    private func presentUnreachableAlert() {
+        let alert = UIAlertController(title: "No internet connection", message: "Please check your internet connection settings.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: {_ in
+            NSLog("The \"Unreachable\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
 }
 
