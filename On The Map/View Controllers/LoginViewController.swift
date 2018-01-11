@@ -66,20 +66,17 @@ class LoginViewController: UIViewController {
             
         } else {
             setUIEnabled(false)
-        }
-        
-        OTMClient.sharedInstance().authenticateWithViewController(self, emailTextfield.text!, passwordTextfield.text!) { (success, errorString) in
             
-            if success {
-                print("Login Success!")
-            }
-            
+            OTMClient.sharedInstance().authenticateWithViewController(self, emailTextfield.text!, passwordTextfield.text!) { (success, errorString) in
+                
+                if success {
+                    print("Login Success!")
+                }
             
             
         }
-        
-        
     }
+}
     
     @IBAction func userDidTapView(_ sender: Any) {
         print("userDidTapView")

@@ -30,6 +30,8 @@ extension OTMClient {
         // MARK: General
         static let StatusCode = "status"
         static let Error = "error"
+        static let Session = "session"
+        static let SessionID = "id"
         
     }
     
