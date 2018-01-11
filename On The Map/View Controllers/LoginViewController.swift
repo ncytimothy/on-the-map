@@ -56,9 +56,13 @@ class LoginViewController: UIViewController {
         User.username = emailTextfield.text
         User.password = passwordTextfield.text
         
+        display()
         
-       
-        
+    }
+    
+    func display() {
+        print("\(User.username)")
+        print("\(User.password)")
     }
     
     
@@ -83,7 +87,16 @@ class LoginViewController: UIViewController {
         }
         task.resume()
     }
-    
+}
 
+//MARK: - LoginViewController (UITextFieldDelegate)
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
 

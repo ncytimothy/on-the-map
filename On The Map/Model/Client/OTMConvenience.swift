@@ -43,9 +43,6 @@ extension OTMClient {
     }
     
     
-    func display() {
-        print("\(User.username)")
-        print("\(User.password)")
-    }
+    
     
 }

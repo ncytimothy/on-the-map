@@ -80,6 +80,11 @@ class OTMClient: NSObject {
         
     }
     
+    func display() {
+        print("\(User.username)")
+        print("\(User.password)")
+    }
+    
     
     
     private func udacityURLWithPathExtension(withPathExtension: String? = nil) -> URL {
