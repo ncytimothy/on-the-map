@@ -88,8 +88,7 @@ class OTMClient: NSObject {
         
         var parsedResult: AnyObject! = nil
         do {
-            parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
-            print("parsedResult: \(parsedResult)")
+            parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as! AnyObject
         } catch {
             let userInfo = [NSLocalizedDescriptionKey: "Cannot parse data as JSON: '\(data)'"]
             completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))

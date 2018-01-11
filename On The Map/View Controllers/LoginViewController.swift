@@ -35,28 +35,52 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        isReachable()
+    
+    }
+    
+    // MARK: Network Reachability
+    
+    func isReachable() {
         reachability.whenReachable = { _ in
-            print("Reachable")
+            print("I love Veronica")
         }
         
+        reachability.whenUnreachable = { _ in
+           self.presentUnreachableAlert()
+        }
         
         do {
             try reachability.startNotifier()
         } catch {
             print("Unable to start notifier")
         }
-        
+    }
+    
+    private func reachableAtLogin() -> Bool {
+        reachability.whenReachable = {_ in
+            return true
+        }
+        return false
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func presentUnreachableAlert() {
+        let alert = UIAlertController(title: "No internet connection", message: "Please check your internet connection settings.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: {_ in
+            NSLog("The \"Unreachable\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
-
+    
+    
     @IBAction func loginPressed(_ sender: Any) {
         
         userDidTapView(self)
+        guard (reachableAtLogin() == true) else {
+            print("Network Unreachable!")
+            presentUnreachableAlert()
+            return
+        }
         
         if emailTextfield.text!.isEmpty || passwordTextfield.text!.isEmpty {
             debugLabel.text = "Username or Password Empty."
