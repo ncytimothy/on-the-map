@@ -25,6 +25,14 @@ extension OTMClient {
         static let AuthenticationSessionNew = "/session"
     }
     
+    // MARK: JSON Body Keys
+    struct JSONBodyKeys {
+        static let Udacity = "udacity"
+        static let Username = "username"
+        static let Password = "password"
+    }
+    
+    // MARK: JSONResponseKeys
     struct JSONResponseKeys {
         
         // MARK: General

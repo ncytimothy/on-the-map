@@ -30,6 +30,7 @@ extension OTMClient {
             
             if success {
                 print("sessionID: \(sessionID)")
+                completionHandlerForAuth(true, nil)
             }
             
         }
@@ -37,28 +38,9 @@ extension OTMClient {
     }
     
     private func postSession(_ username: String, _ password: String, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: NSError?) -> Void) {
-        
-        print("username: \(username)")
-        print("password: \(password)")
-        
-//        var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
-//        request.httpMethod = "POST"
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".data(using: .utf8)
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: request) { data, response, error in
-//            if error != nil { // Handle error…
-//                return
-//            }
-////            let range = Range(5..<data!.count)
-////            let newData = data?.subdata(in: range) /* subset response data! */
-//            print(String(data: data!, encoding: .utf8)!)
-//        }
-//        task.resume()
     
         /* 1. Specify the HTTP body */
-        let jsonBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
+        let jsonBody = "{\"\(JSONBodyKeys.Udacity)\": {\"\(JSONBodyKeys.Username)\": \"\(username)\", \"password\": \"\(JSONBodyKeys.Password)\"}}"
 
         /* 2. Make the request */
 
