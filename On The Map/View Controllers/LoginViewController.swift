@@ -40,19 +40,6 @@ class LoginViewController: UIViewController {
     
     }
     
-    func play() {
-        
-        print("reachbility.connection: \(reachability.connection)")
-        
-        self.reachability = Reachability.init()!
-        
-        guard (self.reachability.connection == .none) else {
-            print("Connect available")
-            return
-        }
-    }
-    
-    
     // MARK: Actions
     
     @IBAction func loginPressed(_ sender: Any) {
@@ -64,7 +51,6 @@ class LoginViewController: UIViewController {
             return
         }
         
-      
         if emailTextfield.text!.isEmpty || passwordTextfield.text!.isEmpty {
             debugLabel.text = "Username or Password Empty."
             let alert = UIAlertController(title: "Whoops!", message: "Empty Email or Password", preferredStyle: .alert)
