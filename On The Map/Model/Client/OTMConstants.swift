@@ -6,24 +6,34 @@
 //  Copyright © 2018 Timothy Ng. All rights reserved.
 //
 
-import UIKit
+extension OTMClient {
 
-// MARK: - Constants
-
-struct Constants {
+    // MARK: Constants
     
-    struct Udacity {
-        static let ApiScheme = "https"
-        static let ApiHost = "udacity.com"
-        static let ApiPath = "/api"
+    struct Constants {
+        
+        // MARK: URLs
+        struct Udacity {
+            static let ApiScheme = "https"
+            static let ApiHost = "www.udacity.com"
+            static let ApiPath = "/api"
+        }
     }
+    
+    // MARK: Methods
+    struct Methods {
+        static let AuthenticationSessionNew = "/session"
+    }
+    
+    struct JSONResponseKeys {
+        
+        // MARK: General
+        static let StatusCode = "status"
+        static let Error = "error"
+        
+    }
+    
 }
 
-struct Methods {
-    static let AuthenticationSessionNew = "/session"
-}
 
-struct User {
-    static var username: String? = nil
-    static var password: String? = nil
-}
+

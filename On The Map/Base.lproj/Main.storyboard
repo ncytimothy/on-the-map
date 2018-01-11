@@ -57,25 +57,41 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="Obb-Ee-vAP"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPj-uZ-QOt">
                                         <rect key="frame" x="0.0" y="206" width="343" height="44"/>
+                                        <color key="backgroundColor" red="0.31268364191055298" green="0.69111096858978271" blue="0.87455642223358154" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="8Jh-T1-Wvg"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Login"/>
+                                        <state key="normal" title="LOG IN">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sQN-EP-eEn"/>
+                                        </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iUV-bf-6Rw">
-                                        <rect key="frame" x="0.0" y="260" width="343" height="290"/>
-                                        <nil key="textColor"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account? Sign Up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQe-rd-3aU">
+                                        <rect key="frame" x="0.0" y="260" width="343" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                        <color key="textColor" red="0.31268364189999998" green="0.69111096859999999" blue="0.87455642219999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-fy-1dN">
+                                        <rect key="frame" x="0.0" y="288" width="343" height="262"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="UDB-1Q-KzS" secondAttribute="trailingMargin" id="MFq-5Z-BJf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="UDB-1Q-KzS" secondAttribute="bottom" constant="18" id="U9d-Cs-kUd"/>
@@ -83,15 +99,25 @@
                             <constraint firstItem="UDB-1Q-KzS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="35" id="sd2-4c-KYY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="gwI-17-1Gf" appends="YES" id="V9a-3i-dgd"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="debugLabel" destination="eZG-fy-1dN" id="eRr-zn-inD"/>
                         <outlet property="emailTextfield" destination="1K1-dH-Jwj" id="OAk-aw-eaq"/>
-                        <outlet property="passwordTextfield" destination="bIx-ff-9YH" id="l2N-YZ-24q"/>
+                        <outlet property="loginButton" destination="XPj-uZ-QOt" id="msB-oR-WpW"/>
+                        <outlet property="passwordTextfield" destination="bIx-ff-9YH" id="1hN-K2-dY8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="gwI-17-1Gf">
+                    <connections>
+                        <action selector="userDidTapView:" destination="BYZ-38-t0r" id="ox7-Es-y2H"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="204" y="94.902548725637189"/>
         </scene>

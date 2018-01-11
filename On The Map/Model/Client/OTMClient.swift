@@ -15,6 +15,11 @@ class OTMClient: NSObject {
     // Shared session (default)
     var session = URLSession.shared
     
+    // Username and Password
+    
+    var username: String? = nil
+    var password: String? = nil
+    
 
 
     // MARK: GET
@@ -28,7 +33,9 @@ class OTMClient: NSObject {
         
     /* 1. Build the URL and Configure the request */
         let request  = NSMutableURLRequest(url: udacityURLWithPathExtension(withPathExtension: method))
-        request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        request.httpBody = jsonBody.data(using: .utf8)
+        
+        print("request.url!: \(request.url!)")
         
     /* 2. Make the reqeust */
         let task = session.dataTask(with: request as URLRequest, completionHandler: {( data, response, error) in
@@ -80,10 +87,7 @@ class OTMClient: NSObject {
         
     }
     
-    func display() {
-        print("\(User.username)")
-        print("\(User.password)")
-    }
+
     
     
     
@@ -102,9 +106,18 @@ class OTMClient: NSObject {
 //            components.queryItems!.append(queryItem)
 //        }
         
-        print(components.url!)
+        print("components.url!: \(components.url!)")
         
         return components.url!
+    }
+    
+    // MARK: Shared Instance
+    
+    class func sharedInstance() -> OTMClient {
+        struct Singleton {
+            static var sharedInstance = OTMClient()
+        }
+        return Singleton.sharedInstance
     }
     
     
