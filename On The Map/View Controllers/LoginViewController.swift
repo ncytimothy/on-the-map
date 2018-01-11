@@ -45,7 +45,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginPressed(_ sender: Any) {
         
         userDidTapView(self)
-            
+        
         if emailTextfield.text!.isEmpty || passwordTextfield.text!.isEmpty {
             debugLabel.text = "Username or Password Empty."
             let alert = UIAlertController(title: "Whoops!", message: "Empty Email or Password", preferredStyle: .alert)
@@ -154,6 +154,7 @@ private extension LoginViewController {
             NSLog("The \"Unreachable\" alert occured.")
         }))
         self.present(alert, animated: true, completion: nil)
+        setUIEnabled(true)
     }
     
     
