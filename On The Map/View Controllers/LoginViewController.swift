@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
     // MARK: Properties
     
     var appDelegate: AppDelegate!
-    let reachability = Reachability()!
+    var reachability = Reachability()!
    
     // MARK: Outlets
     @IBOutlet weak var emailTextfield: UITextField!
@@ -27,6 +27,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // Get the app delegate
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -34,21 +35,36 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        debugLabel.text = ""
         isReachable()
     
     }
+    
+    func play() {
+        
+        print("reachbility.connection: \(reachability.connection)")
+        
+        self.reachability = Reachability.init()!
+        
+        guard (self.reachability.connection == .none) else {
+            print("Connect available")
+            return
+        }
+    }
+    
     
     // MARK: Actions
     
     @IBAction func loginPressed(_ sender: Any) {
         
         userDidTapView(self)
-        guard (reachableAtLogin() == true) else {
-            print("Network Unreachable!")
-            presentUnreachableAlert()
+    
+        guard (reachability.connection != .none) else {
+            print("No internet connection!")
             return
         }
         
+      
         if emailTextfield.text!.isEmpty || passwordTextfield.text!.isEmpty {
             debugLabel.text = "Username or Password Empty."
             let alert = UIAlertController(title: "Whoops!", message: "Empty Email or Password", preferredStyle: .alert)
@@ -57,7 +73,7 @@ class LoginViewController: UIViewController {
             
         } else {
             setUIEnabled(false)
-            
+        
             OTMClient.sharedInstance().authenticateWithViewController(self, emailTextfield.text!, passwordTextfield.text!) { (success, errorString) in
                 
                 if success {
@@ -67,10 +83,11 @@ class LoginViewController: UIViewController {
             
         }
     }
+        
+       
 }
     
     @IBAction func userDidTapView(_ sender: Any) {
-        print("userDidTapView")
         resignIfFirstResponser(emailTextfield)
         resignIfFirstResponser(passwordTextfield)
 
@@ -126,8 +143,9 @@ private extension LoginViewController {
     
     // MARK: Check reachability at viewWillAppear
     func isReachable() {
+     
         reachability.whenReachable = { _ in
-           
+           print("Network reachable")
         }
         
         reachability.whenUnreachable = { _ in
@@ -142,12 +160,21 @@ private extension LoginViewController {
     }
     
     // MARK: Check reachability at Login
-    private func reachableAtLogin() -> Bool {
-        reachability.whenReachable = {_ in
-            return true
-        }
-        return false
-    }
+//    private func reachableAtLogin() -> Bool {
+//        reachability.whenReachable = { _ in
+//            print("Network reachable")
+//        }
+//
+//        reachability.whenUnreachable = { _ in
+//            self.presentUnreachableAlert()
+//        }
+//
+//        do {
+//            try reachability.startNotifier()
+//        } catch {
+//            print("Unable to start notifier")
+//        }
+//    }
     
     // MARK: Reachability Alert Controller
     private func presentUnreachableAlert() {

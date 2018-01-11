@@ -40,7 +40,7 @@ extension OTMClient {
     private func postSession(_ username: String, _ password: String, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: NSError?) -> Void) {
     
         /* 1. Specify the HTTP body */
-        let jsonBody = "{\"\(JSONBodyKeys.Udacity)\": {\"\(JSONBodyKeys.Username)\": \"\(username)\", \"password\": \"\(JSONBodyKeys.Password)\"}}"
+        let jsonBody = "{\"\(JSONBodyKeys.Udacity)\": {\"\(JSONBodyKeys.Username)\": \"\(username)\", \"\(JSONBodyKeys.Password)\": \"\(password)\"}}"
 
         /* 2. Make the request */
 

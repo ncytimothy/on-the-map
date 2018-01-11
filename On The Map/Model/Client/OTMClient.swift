@@ -37,8 +37,7 @@ class OTMClient: NSObject {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"udacity\": {\"username\": \"timothy2009good@gmail.com\", \"password\": \"Tim1018@\"}}".data(using: .utf8)
-//        request.httpBody = jsonBody.data(using: .utf8)
+        request.httpBody = jsonBody.data(using: .utf8)
        
         
     /* 2. Make the reqeust */
