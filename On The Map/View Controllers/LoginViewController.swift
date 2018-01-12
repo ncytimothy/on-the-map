@@ -43,10 +43,14 @@ class LoginViewController: UIViewController {
     
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
     // MARK: Actions
     @IBAction func signUpPressed(_ sender: Any) {
         
-        if let link = URL(string: "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated") {
+        if let link = URL(string: UdacityClient.Constants.Udacity.SignUp) {
             UIApplication.shared.open(link)
         }
         
@@ -73,10 +77,12 @@ class LoginViewController: UIViewController {
             
                     if success {
                         print("Login Success!")
+                       
                     } else {
                         self.presentAlert(UdacityClient.Alert.InvalidTitle, UdacityClient.Alert.InvalidMessage, UdacityClient.Alert.TryAgain)
-                        self.loginButton.alpha = 1.0
                     }
+                
+                     self.setUIEnabled(true)
                 }
             }
         }
@@ -162,11 +168,35 @@ private extension LoginViewController {
     }
 }
 
-// MARK: - LoginViewController (Invalid Login Credentials Alert Controller)
+// MARK: - LoginViewController (Keyboard Notifications)
 private extension LoginViewController {
     
-  
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+    }
     
+    func unsubscribeToKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        if passwordTextfield.isFirstResponder {
+            view.frame.origin.y = -getKeyboardHeight(notification)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
+    func getKeyboardHeight(_ notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
+    }
+
 }
 
 

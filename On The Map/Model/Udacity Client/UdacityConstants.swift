@@ -17,6 +17,7 @@ extension UdacityClient {
             static let ApiScheme = "https"
             static let ApiHost = "www.udacity.com"
             static let ApiPath = "/api"
+            static let SignUp = "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated"
         }
     }
     
