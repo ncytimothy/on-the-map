@@ -79,6 +79,84 @@ class UdacityClient: NSObject {
         return task
     }
     
+    // MARK: DELETE
+    func taskForDELETEMethod(_ method: String, completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+    /*1. Build the URL and Congifure the requst */
+        let request = NSMutableURLRequest(url: udacityURLWithPathExtension(withPathExtension: method))
+        request.httpMethod = "DELETE"
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+                if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+    
+   /* 2. Make the request */
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {( data, response, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethod", code: 1, userInfo: userInfo))
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)!")
+                return
+            }
+            
+            
+            /* GUARD: Was a successful status code returned? */
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            /* 3. Parse the result by the request and use the data */
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForDELETE)
+        })
+        
+        /* 4. Start the request */
+        task.resume()
+        
+        return task
+    }
+        
+        
+//    var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+//    request.httpMethod = "DELETE"
+//    var xsrfCookie: HTTPCookie? = nil
+//    let sharedCookieStorage = HTTPCookieStorage.shared
+//    for cookie in sharedCookieStorage.cookies! {
+//    if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+//    }
+//    if let xsrfCookie = xsrfCookie {
+//    request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+//    }
+//    let session = URLSession.shared
+//    let task = session.dataTask(with: request) { data, response, error in
+//    if error != nil { // Handle error…
+//    return
+//    }
+//    let range = Range(5..<data!.count)
+//    let newData = data?.subdata(in: range) /* subset response data! */
+//    print(String(data: newData!, encoding: .utf8)!)
+//    }
+//    task.resume()
+    
+    
+    
     
     private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         

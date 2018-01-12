@@ -23,7 +23,6 @@ extension UdacityClient {
      */
     
     
-    
     func authenticateWithViewController(_ hostViewController: UIViewController, _ username: String, _ password: String, completionHandlerForAuth: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         postSession(username, password) { (success, sessionID, errorString) in
@@ -36,10 +35,10 @@ extension UdacityClient {
             }
             
         }
-        
     }
     
-    private func postSession(_ username: String, _ password: String, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: NSError?) -> Void) {
+    
+    private func postSession(_ username: String, _ password: String, completionHandlerForSession: @escaping (_ success: Bool, _ sessionID: String?, _ error: NSError?) -> Void) {
     
         /* 1. Specify the HTTP body */
         let jsonBody = "{\"\(JSONBodyKeys.Udacity)\": {\"\(JSONBodyKeys.Username)\": \"\(username)\", \"\(JSONBodyKeys.Password)\": \"\(password)\"}}"
@@ -56,10 +55,30 @@ extension UdacityClient {
                     print("sessionID: \(sessionID)")
                     completionHandlerForSession(true, sessionID, nil)
                 } else {
-                    completionHandlerForSession(false, nil, NSError(domain: "postSession parsing", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not parse postSession"]))
+                    completionHandlerForSession(false, nil, NSError(domain: "postSession parsing", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not parse as JSON: postSession"]))
                 }
             }
 
+        })
+    }
+    
+    // MARK: Logout Session Methods
+    func logoutSession(completionHandlerForLogout: @escaping (_ success: Bool, _ result: String?, _ error: NSError?) -> Void) {
+       
+        /* 1. Make the request */
+        let _ = taskForDELETEMethod(Methods.AuthenticationSessionNew, completionHandlerForDELETE: {(result, error) in
+            
+            /* 2. Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandlerForLogout(false, nil, NSError(domain: "logoutSession Error", code: 1, userInfo: [NSLocalizedDescriptionKey: "Your request returned an error: \(error)"]))
+            } else {
+                if let session = result?[UdacityClient.JSONResponseKeys.Session] as? [String:AnyObject], let sessionID = session[UdacityClient.JSONResponseKeys.SessionID] as? String {
+                    print("sessionID (Logout): \(sessionID)")
+                    completionHandlerForLogout(true, sessionID, nil)
+                } else {
+                    completionHandlerForLogout(false, nil, NSError(domain: "logoutSession parsing", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not parse a JSON: logoutSession"]))
+                }
+            }
         })
     }
 }

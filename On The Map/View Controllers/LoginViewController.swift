@@ -80,13 +80,14 @@ class LoginViewController: UIViewController {
             
                     if success {
                         print("Login Success!")
-                       
+                        self.completeLogin()
                     } else {
                         self.presentAlert(UdacityClient.Alert.InvalidTitle, UdacityClient.Alert.InvalidMessage, UdacityClient.Alert.TryAgain)
                     }
                 
                      self.setUIEnabled(true)
                      self.dismissIndicator()
+                
                 }
             }
         }
@@ -98,9 +99,12 @@ class LoginViewController: UIViewController {
 
     }
     
-//    private func completeLogin() {
-//        let controller = storyboard?.instantiateViewController(withIdentifier: <#T##String#>)
-//    }
+    // MARKL Login
+    
+    private func completeLogin() {
+        let controller = storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
+    }
 
 }
     
