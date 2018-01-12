@@ -19,8 +19,10 @@ class LoginViewController: UIViewController {
     // MARK: Outlets
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
-    @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signUpLabel: UILabel!
+    
+    
     
     // MARK: Life cycles
     
@@ -31,48 +33,53 @@ class LoginViewController: UIViewController {
         // Get the app delegate
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         
+    
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        debugLabel.text = ""
         isReachable()
     
     }
     
     // MARK: Actions
+    @IBAction func signUpPressed(_ sender: Any) {
+        
+        if let link = URL(string: "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated") {
+            UIApplication.shared.open(link)
+        }
+        
+    }
     
     @IBAction func loginPressed(_ sender: Any) {
         
         userDidTapView(self)
         
         if emailTextfield.text!.isEmpty || passwordTextfield.text!.isEmpty {
-            debugLabel.text = "Username or Password Empty."
-            let alert = UIAlertController(title: "Whoops!", message: "Empty Email or Password", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Default action"), style: .default, handler: { _ in NSLog("The \"Dismiss\" alert occured.")}))
-           self.present(alert, animated: true, completion: nil)
+            presentAlert(UdacityClient.Alert.EmptyFieldTitle, UdacityClient.Alert.EmptyFieldMessage, UdacityClient.Alert.Dismiss)
             
         } else {
             setUIEnabled(false)
             
             /* Is internet connection available? */
             guard (reachability.connection != .none) else {
-                print("No internet connection!")
-                presentUnreachableAlert()
+                print("No internet")
+                presentAlert(UdacityClient.Alert.NoInternetTitle, UdacityClient.Alert.NoInternetMessage, UdacityClient.Alert.OK)
                 return
             }
             
-            OTMClient.sharedInstance().authenticateWithViewController(self, emailTextfield.text!, passwordTextfield.text!) { (success, errorString) in
-                
-                if success {
-                    print("Login Success!")
+            UdacityClient.sharedInstance().authenticateWithViewController(self, emailTextfield.text!, passwordTextfield.text!) { (success, errorString) in performUIUpdatesOnMain {
+            
+                    if success {
+                        print("Login Success!")
+                    } else {
+                        self.presentAlert(UdacityClient.Alert.InvalidTitle, UdacityClient.Alert.InvalidMessage, UdacityClient.Alert.TryAgain)
+                        self.loginButton.alpha = 1.0
+                    }
                 }
-            
-            
+            }
         }
-    }
-        
-       
 }
     
     @IBAction func userDidTapView(_ sender: Any) {
@@ -82,7 +89,6 @@ class LoginViewController: UIViewController {
     }
     
 //    private func completeLogin() {
-//        debugLabel.text = ""
 //        let controller = storyboard?.instantiateViewController(withIdentifier: <#T##String#>)
 //    }
 
@@ -111,8 +117,6 @@ private extension LoginViewController {
         emailTextfield.isEnabled = enabled
         passwordTextfield.isEnabled = enabled
         loginButton.isEnabled = enabled
-        debugLabel.text = ""
-        debugLabel.isEnabled = enabled
         
         // adjust login button alpha
         if enabled {
@@ -137,7 +141,7 @@ private extension LoginViewController {
         }
         
         reachability.whenUnreachable = { _ in
-            self.presentUnreachableAlert()
+            self.presentAlert(UdacityClient.Alert.NoInternetTitle, UdacityClient.Alert.NoInternetMessage, UdacityClient.Alert.OK)
         }
         
         do {
@@ -148,15 +152,21 @@ private extension LoginViewController {
     }
     
     // MARK: Reachability Alert Controller
-    private func presentUnreachableAlert() {
-        let alert = UIAlertController(title: "No internet connection", message: "Please check your internet connection settings.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: {_ in
-            NSLog("The \"Unreachable\" alert occured.")
+    private func presentAlert(_ title: String, _ message: String, _ action: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
+            NSLog("The \"\(title)\" alert occured.")
         }))
         self.present(alert, animated: true, completion: nil)
         setUIEnabled(true)
     }
+}
+
+// MARK: - LoginViewController (Invalid Login Credentials Alert Controller)
+private extension LoginViewController {
     
+  
     
 }
+
 

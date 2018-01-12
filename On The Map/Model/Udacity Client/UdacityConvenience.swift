@@ -1,5 +1,5 @@
 //
-//  OTMConvenience.swift
+//  UdacityConvenience.swift
 //  On The Map
 //
 //  Created by Timothy Ng on 1/8/18.
@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-// MARK: - OTMClient (Convenience Resource Methods)
+// MARK: - UdacityClient (Convenience Resource Methods)
 
-extension OTMClient {
+extension UdacityClient {
     
     // MARK: Authentication Methods
     /*
@@ -30,7 +30,9 @@ extension OTMClient {
             
             if success {
                 print("sessionID: \(sessionID)")
-                completionHandlerForAuth(true, nil)
+                completionHandlerForAuth(success, nil)
+            } else {
+                completionHandlerForAuth(success, "Error processing...")
             }
             
         }
@@ -46,13 +48,11 @@ extension OTMClient {
 
         let _ = taskForPOSTMethod(Methods.AuthenticationSessionNew, jsonBody: jsonBody, completionHandlerForPOST: {(result, error) in
             
-            print("result: \(result)")
-
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 completionHandlerForSession(false, nil, NSError(domain: "postSession error", code: 1, userInfo: [NSLocalizedDescriptionKey: "Your request returned an error: \(error)"]))
             } else {
-                if let session = result?[OTMClient.JSONResponseKeys.Session] as? [String:AnyObject], let sessionID = session[OTMClient.JSONResponseKeys.SessionID] as? String {
+                if let session = result?[UdacityClient.JSONResponseKeys.Session] as? [String:AnyObject], let sessionID = session[UdacityClient.JSONResponseKeys.SessionID] as? String {
                     print("sessionID: \(sessionID)")
                     completionHandlerForSession(true, sessionID, nil)
                 } else {

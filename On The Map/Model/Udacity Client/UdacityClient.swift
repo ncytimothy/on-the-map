@@ -1,5 +1,5 @@
 //
-//  OTMClient.swift
+//  UdacityClient.swift
 //  On The Map
 //
 //  Created by Timothy Ng on 1/8/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OTMClient: NSObject {
+class UdacityClient: NSObject {
     
     //MARK: Properties
     
@@ -116,16 +116,14 @@ class OTMClient: NSObject {
 //            components.queryItems!.append(queryItem)
 //        }
         
-        print("components.url!: \(components.url!)")
-        
         return components.url!
     }
     
     // MARK: Shared Instance
     
-    class func sharedInstance() -> OTMClient {
+    class func sharedInstance() -> UdacityClient {
         struct Singleton {
-            static var sharedInstance = OTMClient()
+            static var sharedInstance = UdacityClient()
         }
         return Singleton.sharedInstance
     }

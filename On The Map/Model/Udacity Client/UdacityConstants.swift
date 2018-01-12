@@ -1,12 +1,12 @@
 //
-//  OTMConstants.swift
+//  UdacityConstants.swift
 //  On The Map
 //
 //  Created by Timothy Ng on 1/6/18.
 //  Copyright © 2018 Timothy Ng. All rights reserved.
 //
 
-extension OTMClient {
+extension UdacityClient {
 
     // MARK: Constants
     
@@ -40,6 +40,19 @@ extension OTMClient {
         static let Error = "error"
         static let Session = "session"
         static let SessionID = "id"
+    }
+    
+    // MARK: Alert Controller
+    struct Alert {
+        static let NoInternetTitle = "No internet connection"
+        static let NoInternetMessage = "Please check your internet connection settings."
+        static let OK = "OK"
+        static let EmptyFieldTitle = "Whoops!"
+        static let EmptyFieldMessage = "Empty Email or Password"
+        static let Dismiss = "Dismiss"
+        static let InvalidTitle = "Invalid Login"
+        static let InvalidMessage = "Invalid email or password"
+        static let TryAgain = "Try Again"
         
     }
     

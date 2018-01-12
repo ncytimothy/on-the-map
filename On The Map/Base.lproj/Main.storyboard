@@ -75,18 +75,16 @@
                                             <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sQN-EP-eEn"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account? Sign Up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQe-rd-3aU">
-                                        <rect key="frame" x="0.0" y="260" width="343" height="18"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5K6-r7-mfg">
+                                        <rect key="frame" x="0.0" y="260" width="343" height="290"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" red="0.31268364189999998" green="0.69111096859999999" blue="0.87455642219999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-fy-1dN">
-                                        <rect key="frame" x="0.0" y="288" width="343" height="262"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <state key="normal" title="Don't have an account? Sign Up">
+                                            <color key="titleColor" red="0.31268364189999998" green="0.69111096859999999" blue="0.87455642219999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="signUpPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gPb-fM-h53"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -106,7 +104,6 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="debugLabel" destination="eZG-fy-1dN" id="eRr-zn-inD"/>
                         <outlet property="emailTextfield" destination="1K1-dH-Jwj" id="OAk-aw-eaq"/>
                         <outlet property="loginButton" destination="XPj-uZ-QOt" id="msB-oR-WpW"/>
                         <outlet property="passwordTextfield" destination="bIx-ff-9YH" id="1hN-K2-dY8"/>
