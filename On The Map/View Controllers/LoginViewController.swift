@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     
     var appDelegate: AppDelegate!
     var reachability = Reachability()!
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
    
     // MARK: Outlets
     @IBOutlet weak var emailTextfield: UITextField!
@@ -73,6 +74,8 @@ class LoginViewController: UIViewController {
                 return
             }
             
+            showIndicator()
+            
             UdacityClient.sharedInstance().authenticateWithViewController(self, emailTextfield.text!, passwordTextfield.text!) { (success, errorString) in performUIUpdatesOnMain {
             
                     if success {
@@ -83,6 +86,7 @@ class LoginViewController: UIViewController {
                     }
                 
                      self.setUIEnabled(true)
+                     self.dismissIndicator()
                 }
             }
         }
@@ -197,6 +201,23 @@ private extension LoginViewController {
         return keyboardSize.cgRectValue.height
     }
 
+}
+
+// MARK: - LoginViewController (UIActivityIndicator)
+private extension LoginViewController {
+    
+    func showIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func dismissIndicator() {
+        activityIndicator.stopAnimating()
+    }
+    
 }
 
 
