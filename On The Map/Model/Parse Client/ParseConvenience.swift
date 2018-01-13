@@ -11,20 +11,20 @@ import UIKit
 
 extension ParseClient {
     
-    func returnLocations(completionHandlerForLoc: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+    func returnLocations(_ completionHandlerForLoc: @escaping (_ success: Bool, _ result: [[String:AnyObject]]?, _ errorString: String?) -> Void) {
         
-        getStudentLocations(completionHandlerForStudentLoc: {(success, result, errorString) in
+        getStudentLocations({(success, result, errorString) in
             
             if success {
-                completionHandlerForLoc(true, nil)
+                completionHandlerForLoc(true, result, nil)
             } else {
-                completionHandlerForLoc(false, "Failed!")
+                completionHandlerForLoc(false, nil, "Failed!")
             }
             
         })
     }
     
-    func getStudentLocations(completionHandlerForStudentLoc: @escaping (_ success: Bool, _ result: [[String:AnyObject]]?, _ errorString: String?) -> Void) {
+    func getStudentLocations(_ completionHandlerForStudentLoc: @escaping (_ success: Bool, _ result: [[String:AnyObject]]?, _ errorString: String?) -> Void) {
         
         /* 1. Make the request */
         let _ = taskForGETMethod(Methods.StudentLocation, completionHandlerForGET: {(result, error) in
@@ -36,7 +36,7 @@ extension ParseClient {
             } else {
                 if let result = result?["results"] as? [[String:AnyObject]] {
                     self.locations = result
-                    completionHandlerForStudentLoc(true, result, nil)
+                    completionHandlerForStudentLoc(true, self.locations, nil)
                 }
             }
             

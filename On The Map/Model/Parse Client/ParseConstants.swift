@@ -11,17 +11,25 @@ extension ParseClient {
     // MARK: Constants
     struct Constants {
         
+        static let LimitValue = "100"
+        
         // MARK: URLs
         struct Parse {
             static let ApiScheme = "https"
             static let ApiHost = "parse.udacity.com"
             static let ParsePath = "/parse/classes"
+            
         }
+    }
+    
+    // MARK: Parameters Keys
+    struct ParameterKeys {
+        static let Limit = "limit"
     }
     
     // MARK: Methods
     struct Methods {
-        static let StudentLocation = "/StudentLocation?limit=100"
+        static let StudentLocation = "/StudentLocation"
     }
     
     // MARK: API Key

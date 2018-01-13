@@ -15,47 +15,57 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // MARK: Properties
     let activityIndicator = UIActivityIndicatorView()
     @IBOutlet weak var mapView: MKMapView!
-    var locations: [[String:AnyObject]] = []
+    var parsedLocations: [[String:AnyObject]] = []
     
     // MARK: Life cycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func viewDidLoad() {
         
+        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
+            
+            if success {
+                self.parsedLocations = result!
+                self.updateMapView()
+            }
+        }
+    })
+}
+    
+    func updateMapView() {
+        var annotations = [MKPointAnnotation]()
+    
+        for dictionary in parsedLocations {
+            
+            // Notice that the float values are being used to create CLLocationDegree values.
+            // This is a version of the Double type.
+            let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
+            let long = CLLocationDegrees(dictionary["longitude"] as! Double)
+            
+            // The lat and long are used to create a CLLocationCoordinates2D instance.
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            
+            let first = dictionary["firstName"] as! String
+            let last = dictionary["lastName"] as! String
+            let mediaURL = dictionary["mediaURL"] as! String
+            
+            // Here we create the annotation and set its coordiate, title, and subtitle properties
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(first) \(last)"
+            annotation.subtitle = mediaURL
+            
+            // Finally we place the annotation in an array of annotations.
+            annotations.append(annotation)
+            
+        }
         
-        
-                let locations = hardCodedLocationData()
-                var annotations = [MKPointAnnotation]()
-                print("locations: \(locations)")
-        
-        
-                for dictionary in locations {
-        
-                    // Notice that the float values are being used to create CLLocationDegree values.
-                    // This is a version of the Double type.
-                    let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
-                    let long = CLLocationDegrees(dictionary["longitude"] as! Double)
-        
-                    // The lat and long are used to create a CLLocationCoordinates2D instance.
-                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        
-                    let first = dictionary["firstName"] as! String
-                    let last = dictionary["lastName"] as! String
-                    let mediaURL = dictionary["mediaURL"] as! String
-        
-                    // Here we create the annotation and set its coordiate, title, and subtitle properties
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    annotation.title = "\(first) \(last)"
-                    annotation.subtitle = mediaURL
-        
-                    // Finally we place the annotation in an array of annotations.
-                    annotations.append(annotation)
-        
-                }
-        
-                // When the array is complete, we add the annotations to the map.
-                self.mapView.addAnnotations(annotations)
-        
+        // When the array is complete, we add the annotations to the map.
+        self.mapView.addAnnotations(annotations)
     }
  
    

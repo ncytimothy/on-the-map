@@ -22,15 +22,15 @@ class ParseClient: NSObject {
     
     func taskForGETMethod(_ method: String, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
+        /* 1. Specify parameters */
+        let parameters = [ParseClient.ParameterKeys.Limit: ParseClient.Constants.LimitValue] as [String:AnyObject]
+        
         /* 1. Build the URL, Configure the request */
         
-     
-        
-        let request = NSMutableURLRequest(url: parseURL(withPathExtension: method))
+        let request = NSMutableURLRequest(url: parseURL(parameters, withPathExtension: method))
         request.addValue(APIKeys.ParseAppID, forHTTPHeaderField: HTTPHeader.ParseHeader)
         request.addValue(APIKeys.RESTKey, forHTTPHeaderField: HTTPHeader.RESTHeader)
         
-        print("request: \(request)")
         /* 2. Make the request */
         let task = session.dataTask(with: request as URLRequest, completionHandler: {(data, response, error) in
             
@@ -69,12 +69,18 @@ class ParseClient: NSObject {
     }
     
     // Create URL from method
-    private func parseURL(withPathExtension: String? = nil) -> URL {
+    private func parseURL(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
         
         var components = URLComponents()
         components.scheme = Constants.Parse.ApiScheme
         components.host = Constants.Parse.ApiHost
         components.path = Constants.Parse.ParsePath + (withPathExtension ?? "")
+        components.queryItems = [URLQueryItem]()
+        
+        for (key, value) in parameters {
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
+            components.queryItems!.append(queryItem)
+        }
         
         return components.url!
     }
