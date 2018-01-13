@@ -23,8 +23,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpLabel: UILabel!
     
-    
-    
+  
     // MARK: Life cycles
     
     override func viewDidLoad() {

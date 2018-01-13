@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		7200C5E62003FD45004224C4 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7200C5E52003FD45004224C4 /* UdacityClient.swift */; };
 		7200C5EA200404EA004224C4 /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7200C5E9200404EA004224C4 /* UdacityConvenience.swift */; };
+		722CA63E2009D3530034943A /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CA63D2009D3530034943A /* ParseClient.swift */; };
+		722CA6422009D4E50034943A /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CA6412009D4E50034943A /* ParseConstants.swift */; };
+		722CA6442009D9D20034943A /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CA6432009D9D20034943A /* ParseConvenience.swift */; };
 		72E9BFE120087461009AA69A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9BFE020087461009AA69A /* GCDBlackBox.swift */; };
 		72EA27602009521F00555DD3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA275F2009521F00555DD3 /* MapViewController.swift */; };
 		72F6BB8420029AAE00018465 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F6BB8220029AAE00018465 /* Reachability.swift */; };
@@ -23,6 +26,9 @@
 /* Begin PBXFileReference section */
 		7200C5E52003FD45004224C4 /* UdacityClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		7200C5E9200404EA004224C4 /* UdacityConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
+		722CA63D2009D3530034943A /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		722CA6412009D4E50034943A /* ParseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		722CA6432009D9D20034943A /* ParseConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		72E9BFE020087461009AA69A /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		72EA275F2009521F00555DD3 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		72F6BB8220029AAE00018465 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -79,6 +85,9 @@
 		72EA275E2009520400555DD3 /* Parse Client */ = {
 			isa = PBXGroup;
 			children = (
+				722CA63D2009D3530034943A /* ParseClient.swift */,
+				722CA6412009D4E50034943A /* ParseConstants.swift */,
+				722CA6432009D9D20034943A /* ParseConvenience.swift */,
 			);
 			path = "Parse Client";
 			sourceTree = "<group>";
@@ -194,8 +203,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				722CA6442009D9D20034943A /* ParseConvenience.swift in Sources */,
+				722CA63E2009D3530034943A /* ParseClient.swift in Sources */,
 				72F88DEE200197E300707733 /* UdacityConstants.swift in Sources */,
 				72F88DDD20018D5100707733 /* LoginViewController.swift in Sources */,
+				722CA6422009D4E50034943A /* ParseConstants.swift in Sources */,
 				7200C5E62003FD45004224C4 /* UdacityClient.swift in Sources */,
 				72F6BB8420029AAE00018465 /* Reachability.swift in Sources */,
 				7200C5EA200404EA004224C4 /* UdacityConvenience.swift in Sources */,

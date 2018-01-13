@@ -20,20 +20,13 @@ class UdacityClient: NSObject {
     var username: String? = nil
     var password: String? = nil
     
-
-
-    // MARK: GET
-    func taskForGETMethod() {
-        
-    }
-    
     //MARK: POST
     
     func taskForPOSTMethod(_ method: String, jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
        
      /* 1. Build the URL and Configure the request */
-        let request  = NSMutableURLRequest(url: udacityURLWithPathExtension(withPathExtension: method))
+        let request  = NSMutableURLRequest(url: udacityURL(withPathExtension: method))
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -83,7 +76,7 @@ class UdacityClient: NSObject {
     func taskForDELETEMethod(_ method: String, completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
     /*1. Build the URL and Congifure the requst */
-        let request = NSMutableURLRequest(url: udacityURLWithPathExtension(withPathExtension: method))
+        let request = NSMutableURLRequest(url: udacityURL(withPathExtension: method))
         request.httpMethod = "DELETE"
         var xsrfCookie: HTTPCookie? = nil
         let sharedCookieStorage = HTTPCookieStorage.shared
@@ -133,30 +126,6 @@ class UdacityClient: NSObject {
         return task
     }
         
-        
-//    var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
-//    request.httpMethod = "DELETE"
-//    var xsrfCookie: HTTPCookie? = nil
-//    let sharedCookieStorage = HTTPCookieStorage.shared
-//    for cookie in sharedCookieStorage.cookies! {
-//    if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
-//    }
-//    if let xsrfCookie = xsrfCookie {
-//    request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
-//    }
-//    let session = URLSession.shared
-//    let task = session.dataTask(with: request) { data, response, error in
-//    if error != nil { // Handle error…
-//    return
-//    }
-//    let range = Range(5..<data!.count)
-//    let newData = data?.subdata(in: range) /* subset response data! */
-//    print(String(data: newData!, encoding: .utf8)!)
-//    }
-//    task.resume()
-    
-    
-    
     
     private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
@@ -177,9 +146,7 @@ class UdacityClient: NSObject {
     
 
     
-    
-    
-    private func udacityURLWithPathExtension(withPathExtension: String? = nil) -> URL {
+    private func udacityURL(withPathExtension: String? = nil) -> URL {
         
         var components = URLComponents()
         components.scheme = Constants.Udacity.ApiScheme
@@ -205,7 +172,4 @@ class UdacityClient: NSObject {
         }
         return Singleton.sharedInstance
     }
-    
-    
-    
 }
