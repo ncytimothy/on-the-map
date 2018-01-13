@@ -99,10 +99,10 @@ class LoginViewController: UIViewController {
 
     }
     
-    // MARKL Login
+    // MARK: Login
     
     private func completeLogin() {
-        let controller = storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! UINavigationController
+        let controller = storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! UITabBarController
         present(controller, animated: true, completion: nil)
     }
 
