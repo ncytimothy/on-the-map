@@ -123,7 +123,7 @@ extension LoginViewController: UITextFieldDelegate {
     
 }
 
-// MARK: - LoginViewController (Configure UI)
+// MARK: - LoginViewController (Configure UI and Alert Controller)
 private extension LoginViewController {
     
     func setUIEnabled(_ enabled: Bool) {
@@ -138,6 +138,16 @@ private extension LoginViewController {
             loginButton.alpha = 0.5
         }
         
+    }
+    
+    // MARK: Reachability Alert Controller
+    private func presentAlert(_ title: String, _ message: String, _ action: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
+            NSLog("The \"\(title)\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+        setUIEnabled(true)
     }
 }
 
@@ -162,16 +172,6 @@ private extension LoginViewController {
         } catch {
             print("Unable to start notifier")
         }
-    }
-    
-    // MARK: Reachability Alert Controller
-    private func presentAlert(_ title: String, _ message: String, _ action: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
-            NSLog("The \"\(title)\" alert occured.")
-        }))
-        self.present(alert, animated: true, completion: nil)
-        setUIEnabled(true)
     }
 }
 

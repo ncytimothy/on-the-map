@@ -165,7 +165,6 @@
         <!--On the Map-->
         <scene sceneID="ACh-yr-maJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jRX-hi-JBR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="sRf-BO-OiP" customClass="MapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sAt-NS-mck">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -215,6 +214,9 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="icon_refresh"/>
                                 </button>
+                                <connections>
+                                    <action selector="refreshPressed:" destination="sRf-BO-OiP" id="Hwe-2J-f6U"/>
+                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -222,6 +224,7 @@
                         <outlet property="mapView" destination="Yw5-Fe-pNO" id="wzE-Ii-LTg"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jRX-hi-JBR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2660" y="-224.4377811094453"/>
         </scene>
@@ -245,7 +248,6 @@
         <!--On the Map-->
         <scene sceneID="JN5-QX-17k">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AgB-Wn-CRD" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="7MM-Ca-oEB" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9l1-a7-LF2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -285,6 +287,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AgB-Wn-CRD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2660" y="477"/>
         </scene>

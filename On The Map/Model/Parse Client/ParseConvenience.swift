@@ -11,20 +11,7 @@ import UIKit
 
 extension ParseClient {
     
-    func returnLocations(_ completionHandlerForLoc: @escaping (_ success: Bool, _ result: [[String:AnyObject]]?, _ errorString: String?) -> Void) {
-        
-        getStudentLocations({(success, result, errorString) in
-            
-            if success {
-                completionHandlerForLoc(true, result, nil)
-            } else {
-                completionHandlerForLoc(false, nil, "Failed!")
-            }
-            
-        })
-    }
-    
-    func getStudentLocations(_ completionHandlerForStudentLoc: @escaping (_ success: Bool, _ result: [[String:AnyObject]]?, _ errorString: String?) -> Void) {
+    func getStudentLocations(_ completionHandlerForStudentLoc: @escaping (_ success: Bool, _ result: [StudentInformation]?, _ errorString: String?) -> Void) {
         
         /* 1. Make the request */
         let _ = taskForGETMethod(Methods.StudentLocation, completionHandlerForGET: {(result, error) in
@@ -35,8 +22,11 @@ extension ParseClient {
                 completionHandlerForStudentLoc(false, nil, "Get Student Locations Failed.")
             } else {
                 if let result = result?["results"] as? [[String:AnyObject]] {
-                    self.locations = result
-                    completionHandlerForStudentLoc(true, self.locations, nil)
+                    let locations = StudentInformation.studentLocationsFromResults(result)
+                    StudentLocations = locations
+                    completionHandlerForStudentLoc(true, locations, nil)
+                } else {
+                    print("Cannot parse JSON!")
                 }
             }
             
