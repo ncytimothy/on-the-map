@@ -12,6 +12,7 @@ extension ParseClient {
     struct Constants {
         
         static let LimitValue = "100"
+        static let LatestOrderValue = "-updatedAt"
         
         // MARK: URLs
         struct Parse {
@@ -25,7 +26,9 @@ extension ParseClient {
     // MARK: Parameters Keys
     struct ParameterKeys {
         static let Limit = "limit"
+        static let Order = "order"
     }
+    
     
     // MARK: Methods
     struct Methods {

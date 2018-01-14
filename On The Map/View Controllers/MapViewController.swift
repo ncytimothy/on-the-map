@@ -11,11 +11,12 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
+   
     
     // MARK: Properties
     let activityIndicator = UIActivityIndicatorView()
     @IBOutlet weak var mapView: MKMapView!
-    var parsedLocations: [[String:AnyObject]] = []
+    
     
     // MARK: Life cycle
     
@@ -25,21 +26,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func viewDidLoad() {
-        
-        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
-            
-            if success {
-                self.reloadMapView()
-            } else {
-                self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
-            }
-        }
-    })
-}
+        updateStudentLocations()
+    }
     
     func reloadMapView() {
+        
         let locations = StudentLocations
         var annotations = [MKPointAnnotation]()
+        
+        if !annotations.isEmpty  {
+           annotations.removeAll()
+        }
+        
         for information in locations {
             
             // Notice that the float values are being used to create CLLocationDegree values.
@@ -53,7 +51,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
             let first = information.firstName
             let last = information.lastName
-            let mediaURL = information.mediuaURL
+            let mediaURL = information.mediaURL
 
             // Here we create the annotation and set its coordiate, title, and subtitle properties
             let annotation = MKPointAnnotation()
@@ -68,68 +66,33 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         // When the array is complete, we add the annotations to the map.
         self.mapView.addAnnotations(annotations)
+        print("annotation: \(annotations)")
     }
- 
-   
-        
-        // SAMPLE JSON DATA
-//        let locations = hardCodedLocationData()
-//        var annotations = [MKPointAnnotation]()
-//        print("locations: \(locations)")
-//
-//
-//        for dictionary in locations {
-//
-//            // Notice that the float values are being used to create CLLocationDegree values.
-//            // This is a version of the Double type.
-//            let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
-//            let long = CLLocationDegrees(dictionary["longitude"] as! Double)
-//
-//            // The lat and long are used to create a CLLocationCoordinates2D instance.
-//            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//
-//            let first = dictionary["firstName"] as! String
-//            let last = dictionary["lastName"] as! String
-//            let mediaURL = dictionary["mediaURL"] as! String
-//
-//            // Here we create the annotation and set its coordiate, title, and subtitle properties
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = coordinate
-//            annotation.title = "\(first) \(last)"
-//            annotation.subtitle = mediaURL
-//
-//            // Finally we place the annotation in an array of annotations.
-//            annotations.append(annotation)
-//
-//        }
-//
-//        // When the array is complete, we add the annotations to the map.
-//        self.mapView.addAnnotations(annotations)
-        
-    
-    
+
     // Here we create a view with a "right callout accessory view". You might choose to look into other
     // decoration alternatives. Notice the similarity between this method and the cellForRowAtIndexPath
     // method in TableViewDataSource.
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinTintColor = .red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .infoLight)
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
+            print("viewFor annotation called!")
+            let reuseId = "pin"
+            
+            
+            var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+            
+            if pinView == nil {
+                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                pinView!.canShowCallout = true
+                pinView!.pinTintColor = .red
+                pinView!.rightCalloutAccessoryView = UIButton(type: .infoLight)
+            }
+            else {
+                pinView!.annotation = annotation
+            }
+            return pinView
     }
     
+   
     
     // This delegate method is implemented to respond to taps. It opens the system browser
     // to the URL specified in the annotationViews subtitle property.
@@ -141,6 +104,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
+    
+    func updateStudentLocations() {
+        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
+            
+            self.showIndicator()
+            
+            if success {
+                self.reloadMapView()
+                self.dismissIndicator()
+            } else {
+                self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
+            }
+        }
+    })
+}
     
     // MARK: Action
     
@@ -165,15 +143,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
   }
     
     @IBAction func refreshPressed(_ sender: Any) {
-        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
-            
-            if success {
-//                self.reloadMapView()
-            }
-            }
-        })
-        
+        print("refreshPressed!")
+       self.updateStudentLocations()
     }
+    
     
     
 }

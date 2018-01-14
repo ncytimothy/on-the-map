@@ -13,7 +13,7 @@ public struct StudentInformation {
         var lastName: String
         var latitude: Double
         var longitude: Double
-        var mediuaURL: String
+        var mediaURL: String
     
         init(dictionary: [String:AnyObject]) {
             uniqueKey = dictionary["uniqueKey"] as! String
@@ -21,7 +21,7 @@ public struct StudentInformation {
             lastName = dictionary["lastName"] as! String
             latitude = dictionary["latitude"] as! Double
             longitude = dictionary["longitude"] as! Double
-            mediuaURL = dictionary["mediaURL"] as! String
+            mediaURL = dictionary["mediaURL"] as! String
         }
     
     static func studentLocationsFromResults(_ results: [[String:AnyObject]]) -> 

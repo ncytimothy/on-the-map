@@ -17,14 +17,16 @@ class LocationsTableViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "studentCell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "studentCell") as! LocationsTableViewCell
         let information = StudentLocations[(indexPath as NSIndexPath).row]
-        cell.textLabel?.text = information.firstName
+//        cell.nameLabel?.text = information.firstName + information.lastName
+//        cell.urlLabel?.text = information.mediuaURL
+        
+        cell.label?.text = information.firstName + information.lastName + information.mediaURL
         
         return cell
-    
+        
     }
-    
     
     
     
