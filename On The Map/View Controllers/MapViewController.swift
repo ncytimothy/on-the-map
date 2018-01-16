@@ -17,6 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     let activityIndicator = UIActivityIndicatorView()
     @IBOutlet weak var mapView: MKMapView!
     var annotations = [MKPointAnnotation]()
+    let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
     
     
     // MARK: Life cycle
@@ -26,27 +27,30 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
             
-            self.presentLoadingAlert()
+           self.presentLoadingAlert()
             
             if success {
-                print("result in MapView: \(result)")
+                print("Success!")
                 self.reloadMapView()
-                self.dismiss(animated: true, completion: nil)
+                performUIUpdatesOnMain {
+                    self.alert.dismiss(animated: true, completion: nil)
+                }
             } else {
                 self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
             }
-        }
-    })
-}
-    
-    override func viewDidLoad() {
-        
+            }
+        })
     }
     
 
+    override func viewDidLoad() {
+       
+}
     
     func reloadMapView() {
     
+        print("reloadMapView called")
+        
         if !annotations.isEmpty {
             mapView.removeAnnotations(annotations)
             annotations.removeAll()
@@ -59,7 +63,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             // Notice that the float values are being used to create CLLocationDegree values.
             // This is a version of the Double type.
             
-            let lat = CLLocationDegrees(information.latitude )
+            let lat = CLLocationDegrees(information.latitude)
             let long = CLLocationDegrees(information.longitude)
 
             // The lat and long are used to create a CLLocationCoordinates2D instance.
@@ -82,9 +86,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         // When the array is complete, we add the annotations to the map.
         performUIUpdatesOnMain {
-             self.mapView.addAnnotations(self.annotations)
+            self.mapView.addAnnotations(self.annotations)
         }
-       
     }
 
     // Here we create a view with a "right callout accessory view". You might choose to look into other
@@ -92,10 +95,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // method in TableViewDataSource.
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            print("viewFor annotation called!")
             let reuseId = "pin"
-            
-            
+    
             var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
             
             if pinView == nil {
@@ -129,7 +130,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBAction func pressLogout(_ sender: Any) {
         
         showIndicator()
-        
         UdacityClient.sharedInstance().logoutSession(completionHandlerForLogout: {(success, sessionID, error) in performUIUpdatesOnMain {
             
             if success {
@@ -160,13 +160,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 self.dismiss(animated: true, completion: nil)
             } else {
                 self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
+                }
             }
-        }
-    })
-}
-    
-    
-    
+        })
+    }
 }
 
 // MARK: - MapViewController (UIActivityIndicator)
@@ -200,7 +197,6 @@ private extension MapViewController {
     }
     
     private func presentLoadingAlert() {
-        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
     
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
         loadingIndicator.hidesWhenStopped = true
