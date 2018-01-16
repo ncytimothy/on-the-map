@@ -43,15 +43,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+
+    
     func reloadMapView() {
+    
+        if !annotations.isEmpty {
+            mapView.removeAnnotations(annotations)
+            annotations.removeAll()
+        }
         
         let locations = StudentLocations
         
-        if !annotations.isEmpty {
-            print("removing annotations")
-            annotations.removeAll()
-        }
-    
         for information in locations {
             
             // Notice that the float values are being used to create CLLocationDegree values.
@@ -144,30 +146,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     })
   }
     
+    
     @IBAction func refreshPressed(_ sender: Any) {
         print("refreshPressed!")
         
-        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-        
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-        loadingIndicator.startAnimating();
-        
-        alert.view.addSubview(loadingIndicator)
-        self.present(alert, animated: true, completion: nil)
+        presentLoadingAlert()
         
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
-            
-            let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-            
-            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-            loadingIndicator.hidesWhenStopped = true
-            loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-            loadingIndicator.startAnimating();
-            
-            alert.view.addSubview(loadingIndicator)
-            self.present(alert, animated: true, completion: nil)
             
             if success {
                 print("result in MapView: \(result)")
