@@ -12,7 +12,5 @@ class LocationsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var urlLabel: UILabel!
-    @IBOutlet weak var label: UILabel!
-    
     
 }

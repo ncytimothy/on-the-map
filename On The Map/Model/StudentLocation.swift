@@ -8,7 +8,6 @@
 
 import Foundation
 public struct StudentInformation {
-        var uniqueKey: String
         var firstName: String
         var lastName: String
         var latitude: Double
@@ -16,7 +15,6 @@ public struct StudentInformation {
         var mediaURL: String
     
         init(dictionary: [String:AnyObject]) {
-            uniqueKey = dictionary["uniqueKey"] as! String
             firstName =  dictionary["firstName"] as! String
             lastName = dictionary["lastName"] as! String
             latitude = dictionary["latitude"] as! Double
