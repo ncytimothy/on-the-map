@@ -11,6 +11,33 @@ import UIKit
 
 class LocationsTableViewController: UITableViewController {
     
+    // MARK: Action
+    @IBAction func pressRefresh(_ sender: Any) {
+        
+        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
+            let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+            
+            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+            loadingIndicator.hidesWhenStopped = true
+            loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+            loadingIndicator.startAnimating();
+            
+            alert.view.addSubview(loadingIndicator)
+            self.present(alert, animated: true, completion: nil)
+            
+            if success {
+                self.tableView.reloadData()
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                print("Cannot update data")
+            }
+        }
+    })
+}
+    
+    
+    
+    // MARK: UITableViewDelegate Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return StudentLocations.count
     }
@@ -39,4 +66,18 @@ class LocationsTableViewController: UITableViewController {
         return 100.0
     }
     
+}
+
+// MARK: - MapViewController (Configure UI and Alert Controller)
+private extension MapViewController {
+    
+    
+    // MARK: Reachability Alert Controller
+    private func presentAlert(_ title: String, _ message: String, _ action: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
+            NSLog("The \"\(title)\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
 }

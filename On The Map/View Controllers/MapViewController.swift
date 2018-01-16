@@ -16,6 +16,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // MARK: Properties
     let activityIndicator = UIActivityIndicatorView()
     @IBOutlet weak var mapView: MKMapView!
+    var annotations = [MKPointAnnotation]()
     
     
     // MARK: Life cycle
@@ -23,21 +24,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-    }
+        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
+            
+            self.presentLoadingAlert()
+            
+            if success {
+                print("result in MapView: \(result)")
+                self.reloadMapView()
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
+            }
+        }
+    })
+}
     
     override func viewDidLoad() {
-        updateStudentLocations()
+        
     }
     
     func reloadMapView() {
         
         let locations = StudentLocations
-        var annotations = [MKPointAnnotation]()
         
-        if !annotations.isEmpty  {
-           annotations.removeAll()
+        if !annotations.isEmpty {
+            print("removing annotations")
+            annotations.removeAll()
         }
-        
+    
         for information in locations {
             
             // Notice that the float values are being used to create CLLocationDegree values.
@@ -65,8 +79,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
-        print("annotation: \(annotations)")
+        performUIUpdatesOnMain {
+             self.mapView.addAnnotations(self.annotations)
+        }
+       
     }
 
     // Here we create a view with a "right callout accessory view". You might choose to look into other
@@ -104,21 +120,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
-    
-    func updateStudentLocations() {
-        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
-            
-            self.showIndicator()
-            
-            if success {
-                self.reloadMapView()
-                self.dismissIndicator()
-            } else {
-                self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
-            }
-        }
-    })
-}
+ 
     
     // MARK: Action
     
@@ -144,8 +146,39 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBAction func refreshPressed(_ sender: Any) {
         print("refreshPressed!")
-       self.updateStudentLocations()
-    }
+        
+        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+        
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        self.present(alert, animated: true, completion: nil)
+        
+        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
+            
+            let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+            
+            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+            loadingIndicator.hidesWhenStopped = true
+            loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+            loadingIndicator.startAnimating();
+            
+            alert.view.addSubview(loadingIndicator)
+            self.present(alert, animated: true, completion: nil)
+            
+            if success {
+                print("result in MapView: \(result)")
+                self.reloadMapView()
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
+            }
+        }
+    })
+}
     
     
     
@@ -178,6 +211,18 @@ private extension MapViewController {
         alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
             NSLog("The \"\(title)\" alert occured.")
         }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func presentLoadingAlert() {
+        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+    
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+    
+        alert.view.addSubview(loadingIndicator)
         self.present(alert, animated: true, completion: nil)
     }
 }
