@@ -21,20 +21,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     // MARK: Life cycle
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        presentLoadingAlert()
+
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
-            
-           self.presentLoadingAlert()
-            
+
             if success {
-                print("Success!")
+                print("result in MapView: \(result)")
                 self.reloadMapView()
                 performUIUpdatesOnMain {
                     self.alert.dismiss(animated: true, completion: nil)
                 }
+
             } else {
                 self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
             }
@@ -42,10 +42,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         })
     }
     
+    
 
-    override func viewDidLoad() {
-       
-}
     
     func reloadMapView() {
     
@@ -130,21 +128,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBAction func pressLogout(_ sender: Any) {
         
         showIndicator()
-        UdacityClient.sharedInstance().logoutSession(completionHandlerForLogout: {(success, sessionID, error) in performUIUpdatesOnMain {
+        UdacityClient.sharedInstance().logoutSession(completionHandlerForLogout: {(success, error) in performUIUpdatesOnMain {
             
             if success {
                 print("Logout Success!")
                 self.dismissIndicator()
-                self.dismiss(animated: true, completion: nil)
+                
             } else {
                 print("Cannot logout!")
                 self.presentAlert("Cannot Logout", "Logout unsuccessful. Please try again.", "OK")
                 self.dismissIndicator()
                 return
             }
+            
+            self.dismiss(animated: true, completion: nil)
         }
     })
   }
+    
+    @IBAction func addPressed(_ sender: Any) {
+        
+        let addLocationVC = storyboard?.instantiateViewController(withIdentifier: "addLocationVC") as! AddLocationViewController
+        self.navigationController?.pushViewController(addLocationVC, animated: true)
+        
+    }
+    
     
     
     @IBAction func refreshPressed(_ sender: Any) {

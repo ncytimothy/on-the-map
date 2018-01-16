@@ -11,8 +11,9 @@ import UIKit
 
 class LocationsTableViewController: UITableViewController {
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    // MARK: Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
         updateTableView()
     }
     
@@ -33,9 +34,9 @@ class LocationsTableViewController: UITableViewController {
             } else {
                 print("Cannot update data")
             }
-            }
-        })
-    }
+        }
+    })
+}
     
     
     // MARK: UITableViewDelegate Methods

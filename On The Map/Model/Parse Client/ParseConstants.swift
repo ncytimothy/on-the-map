@@ -41,9 +41,19 @@ extension ParseClient {
         static let RESTKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
     }
     
+    // MARK: HTTPHeader
     struct HTTPHeader {
         static let ParseHeader = "X-Parse-Application-Id"
         static let RESTHeader = "X-Parse-REST-API-Key"
     }
     
+    // MARK: JSONResponseKeys
+    struct JSONResponseKeys {
+        static let UniqueKey = "uniqueKey"
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        static let MediaURL = "mediaURL"
+    }
 }

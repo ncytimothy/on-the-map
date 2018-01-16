@@ -12,6 +12,7 @@
 		722CA63E2009D3530034943A /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CA63D2009D3530034943A /* ParseClient.swift */; };
 		722CA6422009D4E50034943A /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CA6412009D4E50034943A /* ParseConstants.swift */; };
 		722CA6442009D9D20034943A /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CA6432009D9D20034943A /* ParseConvenience.swift */; };
+		72528473200EAA2D007B4D9B /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72528472200EAA2D007B4D9B /* AddLocationViewController.swift */; };
 		72AEE012200BE0D800C170EF /* LocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AEE011200BE0D800C170EF /* LocationsTableViewController.swift */; };
 		72BD02C5200BFD1800FE83A0 /* LocationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BD02C4200BFD1800FE83A0 /* LocationsTableViewCell.swift */; };
 		72E9BFE120087461009AA69A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9BFE020087461009AA69A /* GCDBlackBox.swift */; };
@@ -32,6 +33,7 @@
 		722CA63D2009D3530034943A /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		722CA6412009D4E50034943A /* ParseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		722CA6432009D9D20034943A /* ParseConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
+		72528472200EAA2D007B4D9B /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		72AEE011200BE0D800C170EF /* LocationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTableViewController.swift; sourceTree = "<group>"; };
 		72BD02C4200BFD1800FE83A0 /* LocationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTableViewCell.swift; sourceTree = "<group>"; };
 		72E9BFE020087461009AA69A /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 		72F88DEC2001974F00707733 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				72528472200EAA2D007B4D9B /* AddLocationViewController.swift */,
 				72AEE011200BE0D800C170EF /* LocationsTableViewController.swift */,
 				72EA275F2009521F00555DD3 /* MapViewController.swift */,
 				72F88DDC20018D5100707733 /* LoginViewController.swift */,
@@ -227,6 +230,7 @@
 				72AEE012200BE0D800C170EF /* LocationsTableViewController.swift in Sources */,
 				72F88DDD20018D5100707733 /* LoginViewController.swift in Sources */,
 				722CA6422009D4E50034943A /* ParseConstants.swift in Sources */,
+				72528473200EAA2D007B4D9B /* AddLocationViewController.swift in Sources */,
 				7200C5E62003FD45004224C4 /* UdacityClient.swift in Sources */,
 				72F6BB8420029AAE00018465 /* Reachability.swift in Sources */,
 				7200C5EA200404EA004224C4 /* UdacityConvenience.swift in Sources */,
