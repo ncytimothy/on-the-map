@@ -24,17 +24,37 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        presentLoadingAlert()
+//
+//        ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
+//
+//            if success {
+//                print("result in MapView: \(result)")
+//                self.reloadMapView()
+//                performUIUpdatesOnMain {
+//                    self.alert.dismiss(animated: true, completion: nil)
+//                }
+//
+//            } else {
+//                self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
+//            }
+//            }
+//        })
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         presentLoadingAlert()
-
+        
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
-
+            
             if success {
                 print("result in MapView: \(result)")
                 self.reloadMapView()
                 performUIUpdatesOnMain {
                     self.alert.dismiss(animated: true, completion: nil)
                 }
-
+                
             } else {
                 self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
             }
