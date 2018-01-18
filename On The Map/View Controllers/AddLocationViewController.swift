@@ -12,8 +12,10 @@ class AddLocationViewController: UIViewController {
 
     @IBOutlet weak var cancelBarItem: UIBarButtonItem!
     
+    @IBOutlet weak var navigationBar: UINavigationBar!
     
     override func viewWillAppear(_ animated: Bool) {
+        navigationBar.isHidden = true
         super.viewWillAppear(animated)
         navigationItem.leftBarButtonItem = cancelBarItem
         self.tabBarController?.tabBar.isHidden = true
@@ -26,6 +28,11 @@ class AddLocationViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    @IBAction func pressFindLocation(_ sender: Any) {
+        let locationOnMapVC = storyboard?.instantiateViewController(withIdentifier: "LocationOnMap") as! UIViewController
+        self.navigationController?.pushViewController(locationOnMapVC, animated: true)
     }
     
     
