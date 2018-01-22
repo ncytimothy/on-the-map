@@ -11,18 +11,18 @@ import Foundation
 public var userUniqueKey: String = ""
 
 public struct StudentInformation {
-        var firstName: String
-        var lastName: String
-        var latitude: Double
-        var longitude: Double
-        var mediaURL: String
+        var firstName: String? = LocationConstants.FirstName
+        var lastName: String? = LocationConstants.LastName
+        var latitude: Double? = LocationConstants.Latitude
+        var longitude: Double? = LocationConstants.Longitude
+        var mediaURL: String? = LocationConstants.MediaURL
     
         init(dictionary: [String:AnyObject]) {
-            firstName =  dictionary[ParseClient.JSONResponseKeys.FirstName] as! String
-            lastName = dictionary[ParseClient.JSONResponseKeys.LastName] as! String
-            latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as! Double
-            longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as! Double
-            mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as! String
+            firstName =  dictionary[ParseClient.JSONResponseKeys.FirstName] as? String
+            lastName = dictionary[ParseClient.JSONResponseKeys.LastName] as? String
+            latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as? Double
+            longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as? Double
+            mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as? String
         }
     
     static func studentLocationsFromResults(_ results: [[String:AnyObject]]) -> 

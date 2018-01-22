@@ -54,8 +54,11 @@ class LocationsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentCell") as! LocationsTableViewCell
         let information = StudentLocations[(indexPath as NSIndexPath).row]
         
-        cell.nameLabel?.text = information.firstName + " " + information.lastName
-        cell.urlLabel?.text = information.mediaURL
+        if let firstName = information.firstName, let lastName = information.lastName {
+            cell.nameLabel?.text = firstName + " " + lastName
+            cell.urlLabel?.text = information.mediaURL
+        }
+       
         
         return cell
         
@@ -64,7 +67,7 @@ class LocationsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let information = StudentLocations[(indexPath as NSIndexPath).row]
-        if let url = URL(string: information.mediaURL) {
+        if let mediaURL = information.mediaURL, let url = URL(string: mediaURL) {
             UIApplication.shared.open(url)
         }
     }

@@ -53,6 +53,7 @@ extension UdacityClient {
                 
                 if let account = result?[UdacityClient.JSONResponseKeys.Account] as? [String:AnyObject], let uniqueKey = account[UdacityClient.JSONResponseKeys.UniqueKey] as? String {
                     print("uniqueKey: \(uniqueKey)")
+                    userUniqueKey = uniqueKey
                     completionHandlerForSession(true, nil)
                 } else {
                     completionHandlerForSession(false, NSError(domain: "postSession parsing", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not parse as JSON: postSession"]))

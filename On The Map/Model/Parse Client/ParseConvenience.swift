@@ -13,10 +13,13 @@ extension ParseClient {
     
     func getStudentLocations(_ completionHandlerForStudentLoc: @escaping (_ success: Bool, _ result: [StudentInformation]?, _ errorString: String?) -> Void) {
         
-        /* 1. Make the request */
-        let _ = taskForGETMethod(Methods.StudentLocation, completionHandlerForGET: {(result, error) in
+        /* 1. Specify parameters */
+        let parameters = [ParseClient.ParameterKeys.Limit: ParseClient.Constants.LimitValue, ParseClient.ParameterKeys.Order: ParseClient.Constants.LatestOrderValue] as [String:AnyObject]
+        
+        /* 3. Make the request */
+        let _ = taskForGETMethod(Methods.StudentLocation, parameters, completionHandlerForGET: {(result, error) in
             
-            /* 2. Send the desired value(s) to completion handler */
+            /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print(error)
                 completionHandlerForStudentLoc(false, nil, "Get Student Locations Failed.")
@@ -33,5 +36,7 @@ extension ParseClient {
         })
         
     }
+    
+//    func getUserLocation(_ )
     
 }

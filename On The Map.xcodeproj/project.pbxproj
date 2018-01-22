@@ -13,6 +13,8 @@
 		722CA6422009D4E50034943A /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CA6412009D4E50034943A /* ParseConstants.swift */; };
 		722CA6442009D9D20034943A /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CA6432009D9D20034943A /* ParseConvenience.swift */; };
 		72528473200EAA2D007B4D9B /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72528472200EAA2D007B4D9B /* AddLocationViewController.swift */; };
+		725BA7FF2013566000796CE7 /* LocationOnMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725BA7FE2013566000796CE7 /* LocationOnMapViewController.swift */; };
+		727C2774201327BE007F69B3 /* StudentLocationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727C2773201327BE007F69B3 /* StudentLocationConstants.swift */; };
 		72AEE012200BE0D800C170EF /* LocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AEE011200BE0D800C170EF /* LocationsTableViewController.swift */; };
 		72BD02C5200BFD1800FE83A0 /* LocationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BD02C4200BFD1800FE83A0 /* LocationsTableViewCell.swift */; };
 		72E9BFE120087461009AA69A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9BFE020087461009AA69A /* GCDBlackBox.swift */; };
@@ -34,6 +36,8 @@
 		722CA6412009D4E50034943A /* ParseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		722CA6432009D9D20034943A /* ParseConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		72528472200EAA2D007B4D9B /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
+		725BA7FE2013566000796CE7 /* LocationOnMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationOnMapViewController.swift; sourceTree = "<group>"; };
+		727C2773201327BE007F69B3 /* StudentLocationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocationConstants.swift; sourceTree = "<group>"; };
 		72AEE011200BE0D800C170EF /* LocationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTableViewController.swift; sourceTree = "<group>"; };
 		72BD02C4200BFD1800FE83A0 /* LocationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTableViewCell.swift; sourceTree = "<group>"; };
 		72E9BFE020087461009AA69A /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
@@ -65,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				72F01DA0200AD1F40055E2FA /* StudentLocation.swift */,
+				727C2773201327BE007F69B3 /* StudentLocationConstants.swift */,
 				72E9BFE020087461009AA69A /* GCDBlackBox.swift */,
 				72EA275E2009520400555DD3 /* Parse Client */,
 				7263C7552007F123001A34B8 /* Reachability */,
@@ -143,6 +148,7 @@
 		72F88DEC2001974F00707733 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				725BA7FE2013566000796CE7 /* LocationOnMapViewController.swift */,
 				72528472200EAA2D007B4D9B /* AddLocationViewController.swift */,
 				72AEE011200BE0D800C170EF /* LocationsTableViewController.swift */,
 				72EA275F2009521F00555DD3 /* MapViewController.swift */,
@@ -229,10 +235,12 @@
 				72F88DEE200197E300707733 /* UdacityConstants.swift in Sources */,
 				72AEE012200BE0D800C170EF /* LocationsTableViewController.swift in Sources */,
 				72F88DDD20018D5100707733 /* LoginViewController.swift in Sources */,
+				727C2774201327BE007F69B3 /* StudentLocationConstants.swift in Sources */,
 				722CA6422009D4E50034943A /* ParseConstants.swift in Sources */,
 				72528473200EAA2D007B4D9B /* AddLocationViewController.swift in Sources */,
 				7200C5E62003FD45004224C4 /* UdacityClient.swift in Sources */,
 				72F6BB8420029AAE00018465 /* Reachability.swift in Sources */,
+				725BA7FF2013566000796CE7 /* LocationOnMapViewController.swift in Sources */,
 				7200C5EA200404EA004224C4 /* UdacityConvenience.swift in Sources */,
 				72BD02C5200BFD1800FE83A0 /* LocationsTableViewCell.swift in Sources */,
 				72F88DDB20018D5100707733 /* AppDelegate.swift in Sources */,

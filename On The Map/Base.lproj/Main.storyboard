@@ -307,23 +307,28 @@
                     </view>
                     <connections>
                         <outlet property="cancelBarItem" destination="AoQ-pK-bVs" id="Q9L-59-TC3"/>
+                        <outlet property="locationTextfield" destination="f2f-Ju-bFR" id="5ft-ws-sII"/>
                         <outlet property="navigationBar" destination="Crv-13-tG2" id="BAI-SZ-Uoi"/>
+                        <outlet property="websiteTextfield" destination="Usp-Ny-dKO" id="e9g-hQ-JBm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vge-Bh-XcQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3517.5999999999999" y="90.404797601199405"/>
         </scene>
-        <!--View Controller-->
+        <!--Location On Map View Controller-->
         <scene sceneID="Inq-oJ-cs3">
             <objects>
-                <viewController storyboardIdentifier="LocationOnMap" id="FVB-zk-3gA" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationOnMap" id="FVB-zk-3gA" customClass="LocationOnMapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vay-Tt-vix">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cZ7-IR-voQ">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <connections>
+                                    <outlet property="delegate" destination="FVB-zk-3gA" id="PWn-jx-cJq"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gqo-p6-0qf">
                                 <rect key="frame" x="51" y="593" width="273" height="32"/>
@@ -332,6 +337,9 @@
                                 <state key="normal" title="FINISH">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="pressFinish:" destination="FVB-zk-3gA" eventType="touchUpInside" id="dax-m6-dSl"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -346,6 +354,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Q0J-kq-rdc"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="cZ7-IR-voQ" id="8sa-Pd-E9E"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ynq-AW-hlg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

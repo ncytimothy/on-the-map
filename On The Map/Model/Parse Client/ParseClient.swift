@@ -20,10 +20,9 @@ class ParseClient: NSObject {
     
     // MARK: GET
     
-    func taskForGETMethod(_ method: String, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForGETMethod(_ method: String, _ parameters: [String:AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        /* 1. Specify parameters */
-        let parameters = [ParseClient.ParameterKeys.Limit: ParseClient.Constants.LimitValue, ParseClient.ParameterKeys.Order: ParseClient.Constants.LatestOrderValue] as [String:AnyObject]
+       
         
         /* 1. Build the URL, Configure the request */
         
