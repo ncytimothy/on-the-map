@@ -11,15 +11,11 @@ extension ParseClient {
     // MARK: Constants
     struct Constants {
         
-        static let LimitValue = "100"
-        static let LatestOrderValue = "-updatedAt"
-        
         // MARK: URLs
         struct Parse {
             static let ApiScheme = "https"
             static let ApiHost = "parse.udacity.com"
             static let ParsePath = "/parse/classes"
-            
         }
     }
     
@@ -27,8 +23,14 @@ extension ParseClient {
     struct ParameterKeys {
         static let Limit = "limit"
         static let Order = "order"
+        static let Where = "where"
     }
     
+    struct ParameterValues {
+        static let LimitValue = "200"
+        static let LatestOrderValue = "-updatedAt"
+        static let UniqueKey = "uniqueKey"
+    }
     
     // MARK: Methods
     struct Methods {
@@ -49,11 +51,12 @@ extension ParseClient {
     
     // MARK: JSONResponseKeys
     struct JSONResponseKeys {
-        static let UniqueKey = "uniqueKey"
         static let FirstName = "firstName"
         static let LastName = "lastName"
         static let Latitude = "latitude"
         static let Longitude = "longitude"
         static let MediaURL = "mediaURL"
+        static let ObjectID = "objectId"
+        static let UniqueKey = "uniqueKey"
     }
 }

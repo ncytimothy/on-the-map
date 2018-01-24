@@ -16,6 +16,8 @@ public struct StudentInformation {
         var latitude: Double? = LocationConstants.Latitude
         var longitude: Double? = LocationConstants.Longitude
         var mediaURL: String? = LocationConstants.MediaURL
+        var objectID: String? = LocationConstants.ObjectID
+        var uniqueKey: String? = LocationConstants.UniqueKey
     
         init(dictionary: [String:AnyObject]) {
             firstName =  dictionary[ParseClient.JSONResponseKeys.FirstName] as? String
@@ -23,6 +25,8 @@ public struct StudentInformation {
             latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as? Double
             longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as? Double
             mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as? String
+            objectID = dictionary[ParseClient.JSONResponseKeys.ObjectID] as? String
+            uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as? String
         }
     
     static func studentLocationsFromResults(_ results: [[String:AnyObject]]) -> 
@@ -37,7 +41,22 @@ public struct StudentInformation {
             return locations
     }
     
+    static func userLocationFromResults(_ results: [[String:AnyObject]]) -> StudentInformation? {
+        
+        var userLocations = results
+        var userLocation: StudentInformation?
+        
+        if let lastestLocation = userLocations.popLast() {
+            userLocation = StudentInformation(dictionary: lastestLocation)
+        }
+        
+        return userLocation
+
+    }
+    
+    
 }
     
 var StudentLocations = [StudentInformation]()
+var UserLocation: StudentInformation!
 

@@ -33,7 +33,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
             
             if success {
-                print("result in MapView: \(result)")
+//                print("result in MapView: \(result)")
                 self.reloadMapView()
                 performUIUpdatesOnMain {
                     self.alert.dismiss(animated: true, completion: nil)
@@ -41,10 +41,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
             } else {
                 self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
-            }
+                }
             }
         })
-    }
+        
+        ParseClient.sharedInstance().getUserLocation({(success, result, errorString) in performUIUpdatesOnMain {
+            
+            if success {
+                print("result in getUserLocation: \(result)")
+            }
+        }
+    })
+}
     
     
 
