@@ -1,5 +1,5 @@
 //
-//  StudentLocation.swift
+//  StudentInformation.swift
 //  On The Map
 //
 //  Created by Timothy Ng on 1/13/18.
@@ -7,9 +7,6 @@
 //
 
 import Foundation
-
-public var userUniqueKey: String = ""
-
 
 public struct StudentInformation {
         var firstName: String? = LocationConstants.FirstName
@@ -56,10 +53,6 @@ public struct StudentInformation {
         return userLocation
 
     }
-    
-    
 }
-    
-var StudentLocations = [StudentInformation]()
-var UserLocation = StudentInformation(dictionary: [:])
+
 

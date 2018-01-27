@@ -27,7 +27,7 @@ extension ParseClient {
     }
     
     struct ParameterValues {
-        static let LimitValue = "200"
+        static let LimitValue = "100"
         static let LatestOrderValue = "-updatedAt"
         static let UniqueKey = "uniqueKey"
     }

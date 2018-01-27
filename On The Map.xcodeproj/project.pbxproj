@@ -19,7 +19,8 @@
 		72BD02C5200BFD1800FE83A0 /* LocationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BD02C4200BFD1800FE83A0 /* LocationsTableViewCell.swift */; };
 		72E9BFE120087461009AA69A /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9BFE020087461009AA69A /* GCDBlackBox.swift */; };
 		72EA27602009521F00555DD3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA275F2009521F00555DD3 /* MapViewController.swift */; };
-		72F01DA1200AD1F40055E2FA /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F01DA0200AD1F40055E2FA /* StudentLocation.swift */; };
+		72F01DA1200AD1F40055E2FA /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F01DA0200AD1F40055E2FA /* StudentInformation.swift */; };
+		72F6250F201CF7E700ED49E7 /* StudentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F6250E201CF7E700ED49E7 /* StudentStorage.swift */; };
 		72F6BB8420029AAE00018465 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F6BB8220029AAE00018465 /* Reachability.swift */; };
 		72F88DDB20018D5100707733 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F88DDA20018D5100707733 /* AppDelegate.swift */; };
 		72F88DDD20018D5100707733 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F88DDC20018D5100707733 /* LoginViewController.swift */; };
@@ -42,7 +43,8 @@
 		72BD02C4200BFD1800FE83A0 /* LocationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTableViewCell.swift; sourceTree = "<group>"; };
 		72E9BFE020087461009AA69A /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		72EA275F2009521F00555DD3 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		72F01DA0200AD1F40055E2FA /* StudentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
+		72F01DA0200AD1F40055E2FA /* StudentInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		72F6250E201CF7E700ED49E7 /* StudentStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentStorage.swift; sourceTree = "<group>"; };
 		72F6BB8220029AAE00018465 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		72F88DD720018D5100707733 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72F88DDA20018D5100707733 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,7 +70,8 @@
 		7200C5E720040411004224C4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				72F01DA0200AD1F40055E2FA /* StudentLocation.swift */,
+				72F6250E201CF7E700ED49E7 /* StudentStorage.swift */,
+				72F01DA0200AD1F40055E2FA /* StudentInformation.swift */,
 				727C2773201327BE007F69B3 /* StudentLocationConstants.swift */,
 				72E9BFE020087461009AA69A /* GCDBlackBox.swift */,
 				72EA275E2009520400555DD3 /* Parse Client */,
@@ -229,7 +232,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72F01DA1200AD1F40055E2FA /* StudentLocation.swift in Sources */,
+				72F6250F201CF7E700ED49E7 /* StudentStorage.swift in Sources */,
+				72F01DA1200AD1F40055E2FA /* StudentInformation.swift in Sources */,
 				722CA6442009D9D20034943A /* ParseConvenience.swift in Sources */,
 				722CA63E2009D3530034943A /* ParseClient.swift in Sources */,
 				72F88DEE200197E300707733 /* UdacityConstants.swift in Sources */,
