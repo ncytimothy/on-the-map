@@ -16,4 +16,5 @@ struct LocationConstants {
     static let MediaURL = "Media URL"
     static let ObjectID = "Object ID"
     static let UniqueKey = "Unique Key"
+    static let MapString = "mapString"
 }

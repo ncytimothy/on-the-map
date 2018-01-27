@@ -11,10 +11,18 @@ import UIKit
 
 class LocationsTableViewController: UITableViewController {
     
+    // MARK: Properties
+    let activityIndicator = UIActivityIndicatorView()
+    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -27,6 +35,36 @@ class LocationsTableViewController: UITableViewController {
         updateTableView()
     }
     
+    @IBAction func pressAdd(_ sender: Any) {
+        if UserLocation != nil {
+            presentAlertWithCancel("", "User " + "\"\(UserLocation.firstName!)" + " " + "\(UserLocation.lastName!)\"" + " Has Already Posted a Student Location. Would You Like to Overwrite Their Location?" , "Overwrite")
+        }
+        
+        let addLocationVC = storyboard?.instantiateViewController(withIdentifier: "addLocationVC") as! AddLocationViewController
+        self.navigationController?.pushViewController(addLocationVC, animated: true)
+    }
+    
+    @IBAction func pressLogout(_ sender: Any) {
+        
+        showIndicator()
+        UdacityClient.sharedInstance().logoutSession(completionHandlerForLogout: {(success, error) in performUIUpdatesOnMain {
+            
+            if success {
+                print("Logout Success!")
+                self.dismissIndicator()
+                
+            } else {
+                print("Cannot logout!")
+                self.presentAlert("Cannot Logout", "Logout unsuccessful. Please try again.", "OK")
+                self.dismissIndicator()
+                return
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+            }
+        })
+        
+    }
     
     func updateTableView() {
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
@@ -68,8 +106,13 @@ class LocationsTableViewController: UITableViewController {
         
         let information = StudentLocations[(indexPath as NSIndexPath).row]
         if let mediaURL = information.mediaURL, let url = URL(string: mediaURL) {
-            UIApplication.shared.open(url)
+            if url.scheme != "https" {
+                presentAlert("", "Invalid URL", "Dismiss")
+            } else { UIApplication.shared.open(url) }
         }
+        
+        
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -81,13 +124,46 @@ class LocationsTableViewController: UITableViewController {
 // MARK: - LocationsTableViewController (Configure UI and Alert Controller)
 private extension LocationsTableViewController {
     
-    // MARK: Reachability Alert Controller
+    // MARK: Activity Indicator
+    func showIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func dismissIndicator() {
+        activityIndicator.stopAnimating()
+    }
+    
+    // MARK: Alert Controller
     private func presentAlert(_ title: String, _ message: String, _ action: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
             NSLog("The \"\(title)\" alert occured.")
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: Alert Controller with Cancel
+    private func presentAlertWithCancel(_ title: String, _ message: String, _ action: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
+            let addLocationVC = self.storyboard?.instantiateViewController(withIdentifier: "addLocationVC") as! AddLocationViewController
+            self.navigationController?.pushViewController(addLocationVC, animated: true)
+            NSLog("The \"\(title)\" alert occured.")
+        }))
+        
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel action"), style: .default, handler: {_ in
+            NSLog("The \"\(title)\" alert occured.")
+        })
+        
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: true, completion: nil)
+        
+        
     }
     
     private func presentLoadingAlert() {
@@ -101,4 +177,5 @@ private extension LocationsTableViewController {
         alert.view.addSubview(loadingIndicator)
         self.present(alert, animated: true, completion: nil)
     }
+    
 }

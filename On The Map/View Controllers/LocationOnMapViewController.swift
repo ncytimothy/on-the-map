@@ -14,7 +14,7 @@ class LocationOnMapViewController: UIViewController, MKMapViewDelegate {
     // MARK: Properties
     
     var userLocationString: String!
-    var userLink: URL!
+    var userMediaURL: String!
     var userLongitude: Double!
     var userLatitude: Double!
     
@@ -36,6 +36,11 @@ class LocationOnMapViewController: UIViewController, MKMapViewDelegate {
         
         let localSearch = MKLocalSearch(request: request)
         localSearch.start(completionHandler:{(response, error) in
+            
+            if let error = error {
+                self.presentAlert("Cannot Find Location", "Cannot find location, please try again.", "OK")
+            }
+            
             if let mapItems = response?.mapItems {
                 if let mapItem = mapItems.first {
                     let annotation = MKPointAnnotation()
@@ -50,13 +55,37 @@ class LocationOnMapViewController: UIViewController, MKMapViewDelegate {
             }
         })
     }
+    
+    // MARK: Actions
+    
     @IBAction func pressFinish(_ sender: Any) {
         
-        
+        if UserLocation == nil {
+            ParseClient.sharedInstance().postStudentLocation(userLocationString, userMediaURL, userLatitude, userLongitude, {(success, error) in performUIUpdatesOnMain {
+                
+                if success {
+                        print("Post Location Success!")
+                        let mapViewVC = self.storyboard?.instantiateViewController(withIdentifier: "mapViewVC") as! MapViewController
+                        self.navigationController?.popToViewController(mapViewVC, animated: true)
+                    }
+                }
+            })
+        } else {
+            
+            ParseClient.sharedInstance().putStudentLocation(userLocationString, userMediaURL, userLatitude, userLongitude, {(success, error) in performUIUpdatesOnMain {
+                    if success {
+                        print("Put Location Success!")
+                        self.navigationController?.popToRootViewController(animated: true)
+                    } else {
+                        self.presentAlert("Cannot Post Location", "Post location unsuccessful, please try again.", "Dismiss")
+                    }
+                }
+            })
+            
+        }
         
         
     }
-    
     
     
     
@@ -77,8 +106,30 @@ class LocationOnMapViewController: UIViewController, MKMapViewDelegate {
         }
         return pinView
     }
+}
+
+private extension LocationOnMapViewController {
     
+    // MARK: Reachability Alert Controller
+    private func presentAlert(_ title: String, _ message: String, _ action: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
+            NSLog("The \"\(title)\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     
+    private func presentLoadingAlert() {
+        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+        
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 

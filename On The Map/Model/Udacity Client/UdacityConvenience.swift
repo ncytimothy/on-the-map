@@ -52,7 +52,6 @@ extension UdacityClient {
             } else {
                 
                 if let account = result?[UdacityClient.JSONResponseKeys.Account] as? [String:AnyObject], let uniqueKey = account[UdacityClient.JSONResponseKeys.UniqueKey] as? String {
-                    print("uniqueKey: \(uniqueKey)")
                     userUniqueKey = uniqueKey
                     completionHandlerForSession(true, nil)
                 } else {
@@ -73,6 +72,27 @@ extension UdacityClient {
             if let error = error {
                 completionHandlerForLogout(false, NSError(domain: "logoutSession Error", code: 1, userInfo: [NSLocalizedDescriptionKey: "Your request returned an error: \(error)"]))
             } else { completionHandlerForLogout(true, nil) }
+        })
+    }
+    
+    func getPublicUserData(completionHandlerForPublicUserData: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
+        
+        /* 1. Make the request */
+        let _ = taskForGETMethod("\(Methods.Users)"+"/\(userUniqueKey)", completionHandlerForGET: {(result, error) in
+            
+            if let error = error {
+                completionHandlerForPublicUserData(false, NSError(domain: "getPublicUserData error", code: 1, userInfo: [NSLocalizedDescriptionKey: "Your request returned an error: '\(error)'"]))
+            }
+            
+            if let user = result?[UdacityClient.JSONResponseKeys.User] as? [String:AnyObject], let firstName = user[UdacityClient.JSONResponseKeys.FirstName] as? String, let lastName = user[UdacityClient.JSONResponseKeys.LastName] as? String {
+             
+                UserLocation.firstName = firstName
+                UserLocation.lastName = lastName
+                UserLocation.uniqueKey = userUniqueKey
+                completionHandlerForPublicUserData(true, nil)
+            } else {
+                completionHandlerForPublicUserData(false, NSError(domain: "getPublicData error", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not parse JSON: getPublicUserData"]))
+            }
         })
     }
 }

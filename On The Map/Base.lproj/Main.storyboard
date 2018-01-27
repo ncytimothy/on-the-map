@@ -165,7 +165,7 @@
         <!--On The Map-->
         <scene sceneID="ACh-yr-maJ">
             <objects>
-                <viewController id="sRf-BO-OiP" customClass="MapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapViewVC" id="sRf-BO-OiP" customClass="MapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sAt-NS-mck">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -435,6 +435,9 @@
                                 <state key="normal" title="LOGOUT">
                                     <color key="titleColor" red="0.31268364189999998" green="0.69111096859999999" blue="0.87455642219999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
+                                <connections>
+                                    <action selector="pressLogout:" destination="SMI-OB-GNP" eventType="touchUpInside" id="hHH-6l-Mzy"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -443,6 +446,9 @@
                                     <rect key="frame" x="335" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="icon_addpin"/>
+                                    <connections>
+                                        <action selector="pressAdd:" destination="SMI-OB-GNP" eventType="touchUpInside" id="ObV-wa-ucH"/>
+                                    </connections>
                                 </button>
                             </barButtonItem>
                             <barButtonItem style="plain" id="7g4-7m-mkI">

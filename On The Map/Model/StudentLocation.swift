@@ -10,6 +10,7 @@ import Foundation
 
 public var userUniqueKey: String = ""
 
+
 public struct StudentInformation {
         var firstName: String? = LocationConstants.FirstName
         var lastName: String? = LocationConstants.LastName
@@ -18,6 +19,7 @@ public struct StudentInformation {
         var mediaURL: String? = LocationConstants.MediaURL
         var objectID: String? = LocationConstants.ObjectID
         var uniqueKey: String? = LocationConstants.UniqueKey
+        var mapString: String? = LocationConstants.MapString
     
         init(dictionary: [String:AnyObject]) {
             firstName =  dictionary[ParseClient.JSONResponseKeys.FirstName] as? String
@@ -27,6 +29,7 @@ public struct StudentInformation {
             mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as? String
             objectID = dictionary[ParseClient.JSONResponseKeys.ObjectID] as? String
             uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as? String
+            mapString = dictionary[ParseClient.JSONResponseKeys.MapString] as? String
         }
     
     static func studentLocationsFromResults(_ results: [[String:AnyObject]]) -> 
@@ -58,5 +61,5 @@ public struct StudentInformation {
 }
     
 var StudentLocations = [StudentInformation]()
-var UserLocation: StudentInformation!
+var UserLocation = StudentInformation(dictionary: [:])
 

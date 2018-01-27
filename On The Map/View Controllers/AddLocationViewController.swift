@@ -45,7 +45,6 @@ class AddLocationViewController: UIViewController {
         
         let locationOnMapVC = storyboard?.instantiateViewController(withIdentifier: "LocationOnMap") as! LocationOnMapViewController
         
-        print("locationTextfield.text?.isEmpty: \(locationTextfield.text?.isEmpty)")
         
         if locationTextfield.text!.isEmpty {
             presentAlert("Location Not Found", "Must enter a location", "Dismiss")
@@ -60,7 +59,7 @@ class AddLocationViewController: UIViewController {
                 if websiteURL.scheme != "https" {
                     presentAlert("Invalid Link", "Links must be in \"https://\"", "Dismiss")
                 } else {
-                    locationOnMapVC.userLink = websiteURL
+                    locationOnMapVC.userMediaURL = websiteString
                 }
             }
         }

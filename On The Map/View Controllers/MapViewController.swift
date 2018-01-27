@@ -24,6 +24,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UdacityClient.sharedInstance().getPublicUserData(completionHandlerForPublicUserData: {(success, error) in
+            
+                if success {
+                    print("Get User Public Data Success!")
+                }
+            })
+        
+        ParseClient.sharedInstance().getUserLocation({(success, result, errorString) in
+        
+            if success {
+                print("Success in Getting User Location")
+            } else {
+                print("User Location not found!")
+            }
+            
+        })
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -33,7 +55,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
             
             if success {
-//                print("result in MapView: \(result)")
                 self.reloadMapView()
                 performUIUpdatesOnMain {
                     self.alert.dismiss(animated: true, completion: nil)
@@ -44,14 +65,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         })
-        
-        ParseClient.sharedInstance().getUserLocation({(success, result, errorString) in performUIUpdatesOnMain {
-            
-            if success {
-                print("result in getUserLocation: \(result)")
-            }
-        }
-    })
 }
     
     
@@ -138,7 +151,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
  
     
-    // MARK: Action
+    // MARK: Actions
     
     @IBAction func pressLogout(_ sender: Any) {
         
@@ -163,6 +176,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBAction func addPressed(_ sender: Any) {
         
+        if UserLocation != nil {
+            presentAlertWithCancel("", "User " + "\"\(UserLocation.firstName!)" + " " + "\(UserLocation.lastName!)\"" + " Has Already Posted a Student Location. Would You Like to Overwrite Their Location?" , "Overwrite")
+        }
+        
         let addLocationVC = storyboard?.instantiateViewController(withIdentifier: "addLocationVC") as! AddLocationViewController
         self.navigationController?.pushViewController(addLocationVC, animated: true)
         
@@ -178,7 +195,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
             
             if success {
-                print("result in MapView: \(result)")
                 self.reloadMapView()
                 self.dismiss(animated: true, completion: nil)
             } else {
@@ -210,7 +226,7 @@ private extension MapViewController {
 private extension MapViewController {
     
     
-    // MARK: Reachability Alert Controller
+    // MARK: Alert Controller
     private func presentAlert(_ title: String, _ message: String, _ action: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
@@ -218,6 +234,28 @@ private extension MapViewController {
         }))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    // MARK: Alert Controller with Cancel
+    private func presentAlertWithCancel(_ title: String, _ message: String, _ action: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString(action, comment: "Default action"), style: .default, handler: {_ in
+            let addLocationVC = self.storyboard?.instantiateViewController(withIdentifier: "addLocationVC") as! AddLocationViewController
+            self.navigationController?.pushViewController(addLocationVC, animated: true)
+            NSLog("The \"\(title)\" alert occured.")
+        }))
+        
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel action"), style: .default, handler: {_ in
+            NSLog("The \"\(title)\" alert occured.")
+        })
+        
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: true, completion: nil)
+        
+        
+    }
+    
+    
     
     private func presentLoadingAlert() {
     

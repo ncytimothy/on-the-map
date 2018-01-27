@@ -24,6 +24,7 @@ extension UdacityClient {
     // MARK: Methods
     struct Methods {
         static let AuthenticationSessionNew = "/session"
+        static let Users = "/users"
     }
     
     // MARK: JSON Body Keys
@@ -41,6 +42,10 @@ extension UdacityClient {
         static let Error = "error"
         static let Account = "account"
         static let UniqueKey = "key"
+        static let User = "user"
+        static let FirstName = "first_name"
+        static let LastName = "last_name"
+        
     }
     
     // MARK: Alert Controller
