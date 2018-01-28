@@ -184,7 +184,7 @@ private extension LocationsTableViewController {
             let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
             loadingIndicator.hidesWhenStopped = true
             loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-            loadingIndicator.startAnimating();
+            loadingIndicator.startAnimating()
             
             alert.view.addSubview(loadingIndicator)
             self.present(alert, animated: true, completion: nil)
