@@ -40,6 +40,11 @@ class AddLocationViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func userDidTapView(_ sender: Any) {
+        resignIfFirstResponder(locationTextfield)
+        resignIfFirstResponder(websiteTextfield)
+    }
+    
   
     @IBAction func pressFindLocation(_ sender: Any) {
         
@@ -66,6 +71,22 @@ class AddLocationViewController: UIViewController {
         
         self.navigationController?.pushViewController(locationOnMapVC, animated: true)
     }
+}
+
+// MARK: - AddLocationViewController (UITextFieldDelegate)
+extension AddLocationViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    private func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+    }
+    
 }
 
 // MARK: - AddLocationsViewController (Configure UI and Alert Controller)

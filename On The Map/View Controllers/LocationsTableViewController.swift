@@ -15,6 +15,8 @@ class LocationsTableViewController: UITableViewController {
     let activityIndicator = UIActivityIndicatorView()
     let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
     
+    
+    
     // MARK: Outlet
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
@@ -34,6 +36,7 @@ class LocationsTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.presentLoadingAlert()
         updateTableView()
     }
     
@@ -124,8 +127,7 @@ class LocationsTableViewController: UITableViewController {
             } else { UIApplication.shared.open(url) }
         }
         
-        
-        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

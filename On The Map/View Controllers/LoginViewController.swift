@@ -61,7 +61,7 @@ class LoginViewController: UIViewController {
         userDidTapView(self)
         
         if emailTextfield.text!.isEmpty || passwordTextfield.text!.isEmpty {
-            presentAlert(UdacityClient.Alert.EmptyFieldTitle, UdacityClient.Alert.EmptyFieldMessage, UdacityClient.Alert.Dismiss)
+            self.presentAlert(UdacityClient.Alert.EmptyFieldTitle, UdacityClient.Alert.EmptyFieldMessage, UdacityClient.Alert.Dismiss)
             
         } else {
             setUIEnabled(false)
@@ -69,7 +69,7 @@ class LoginViewController: UIViewController {
             /* Is internet connection available? */
             guard (reachability.connection != .none) else {
                 print("No internet")
-                presentAlert(UdacityClient.Alert.NoInternetTitle, UdacityClient.Alert.NoInternetMessage, UdacityClient.Alert.OK)
+                self.presentAlert(UdacityClient.Alert.NoInternetTitle, UdacityClient.Alert.NoInternetMessage, UdacityClient.Alert.OK)
                 return
             }
             
