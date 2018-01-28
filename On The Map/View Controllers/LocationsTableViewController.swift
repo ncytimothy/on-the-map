@@ -13,6 +13,12 @@ class LocationsTableViewController: UITableViewController {
     
     // MARK: Properties
     let activityIndicator = UIActivityIndicatorView()
+    let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+    
+    // MARK: Outlet
+    @IBOutlet weak var refreshButton: UIButton!
+    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
     
     
     // MARK: Life Cycle
@@ -31,8 +37,11 @@ class LocationsTableViewController: UITableViewController {
         updateTableView()
     }
     
+  
+    
     // MARK: Actions
     @IBAction func pressRefresh(_ sender: Any) {
+        self.presentLoadingAlert()
         updateTableView()
     }
     
@@ -70,15 +79,13 @@ class LocationsTableViewController: UITableViewController {
     func updateTableView() {
         ParseClient.sharedInstance().getStudentLocations({(success, result, errorString) in performUIUpdatesOnMain {
             
-            self.presentLoadingAlert()
-            
             if success {
                 self.tableView.reloadData()
-                self.dismiss(animated: true, completion: nil)
+                self.alert.dismiss(animated: true, completion: nil)
             }
             
             if let error = errorString {
-                self.dismiss(animated: true, completion: {() in
+                self.alert.dismiss(animated: true, completion: {() in
                     self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
                     print("Cannot update data")
                 })
@@ -173,15 +180,15 @@ private extension LocationsTableViewController {
     }
     
     private func presentLoadingAlert() {
-        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
         
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-        loadingIndicator.startAnimating();
+            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+            loadingIndicator.hidesWhenStopped = true
+            loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+            loadingIndicator.startAnimating();
+            
+            alert.view.addSubview(loadingIndicator)
+            self.present(alert, animated: true, completion: nil)
         
-        alert.view.addSubview(loadingIndicator)
-        self.present(alert, animated: true, completion: nil)
     }
     
 }

@@ -80,12 +80,13 @@ class LoginViewController: UIViewController {
                     if success {
                         print("Login Success!")
                         self.completeLogin()
+                        self.dismissIndicator()
                     } else {
+                        self.dismissIndicator()
                         self.presentAlert(UdacityClient.Alert.InvalidTitle, UdacityClient.Alert.InvalidMessage, UdacityClient.Alert.TryAgain)
                     }
                 
                      self.setUIEnabled(true)
-                     self.dismissIndicator()
                 
                 }
             }

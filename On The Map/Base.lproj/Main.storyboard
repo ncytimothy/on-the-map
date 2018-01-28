@@ -464,6 +464,11 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addButton" destination="qyw-mB-wYZ" id="lcv-cD-HlC"/>
+                        <outlet property="logoutButton" destination="DKI-GT-ng5" id="Vki-27-vD6"/>
+                        <outlet property="refreshButton" destination="6UD-2B-LEK" id="jzB-So-Zxn"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tGD-Cg-LzE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
