@@ -14,6 +14,7 @@ class LocationsTableViewController: UITableViewController {
     // MARK: Properties
     let activityIndicator = UIActivityIndicatorView()
     
+    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +31,13 @@ class LocationsTableViewController: UITableViewController {
         updateTableView()
     }
     
-    // MARK: Action
+    // MARK: Actions
     @IBAction func pressRefresh(_ sender: Any) {
         updateTableView()
     }
     
     @IBAction func pressAdd(_ sender: Any) {
-        if UserLocation != nil {
+        if UserLocation.objectID != nil {
             presentAlertWithCancel("", "User " + "\"\(UserLocation.firstName!)" + " " + "\(UserLocation.lastName!)\"" + " Has Already Posted a Student Location. Would You Like to Overwrite Their Location?" , "Overwrite")
         }
         
@@ -74,8 +75,13 @@ class LocationsTableViewController: UITableViewController {
             if success {
                 self.tableView.reloadData()
                 self.dismiss(animated: true, completion: nil)
-            } else {
-                print("Cannot update data")
+            }
+            
+            if let error = errorString {
+                self.dismiss(animated: true, completion: {() in
+                    self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
+                    print("Cannot update data")
+                })
             }
         }
     })

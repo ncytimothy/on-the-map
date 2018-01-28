@@ -56,15 +56,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             if success {
                 self.reloadMapView()
-                performUIUpdatesOnMain {
-                    self.alert.dismiss(animated: true, completion: nil)
-                }
-                
-            } else {
-                self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
-                }
+                self.alert.dismiss(animated: true, completion: nil)
             }
-        })
+            
+            if let error = errorString {
+                self.dismiss(animated: true, completion: {() in
+                    self.presentAlert("Failed to download", "We've failed to find student's locations. Try again later", "OK")
+                    print("Cannot update data")
+                })
+            }
+        }
+    })
 }
     
     
@@ -176,7 +178,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBAction func addPressed(_ sender: Any) {
         
-        if UserLocation != nil {
+        print("UserLocation.objectID: \(UserLocation.objectID)")
+        
+        if UserLocation.objectID != nil {
             presentAlertWithCancel("", "User " + "\"\(UserLocation.firstName!)" + " " + "\(UserLocation.lastName!)\"" + " Has Already Posted a Student Location. Would You Like to Overwrite Their Location?" , "Overwrite")
         }
         

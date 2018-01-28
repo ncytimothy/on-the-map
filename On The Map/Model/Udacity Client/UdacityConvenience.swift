@@ -86,9 +86,11 @@ extension UdacityClient {
             
             if let user = result?[UdacityClient.JSONResponseKeys.User] as? [String:AnyObject], let firstName = user[UdacityClient.JSONResponseKeys.FirstName] as? String, let lastName = user[UdacityClient.JSONResponseKeys.LastName] as? String {
              
+                print("firstName: \(firstName)")
                 UserLocation.firstName = firstName
                 UserLocation.lastName = lastName
                 UserLocation.uniqueKey = userUniqueKey
+                print("UserLocation?.firstName = firstName: \(UserLocation.firstName)")
                 completionHandlerForPublicUserData(true, nil)
             } else {
                 completionHandlerForPublicUserData(false, NSError(domain: "getPublicData error", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not parse JSON: getPublicUserData"]))

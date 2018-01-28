@@ -66,7 +66,9 @@ extension ParseClient {
     func postStudentLocation(_ mapString: String, _ mediaURL: String, _ latitude: Double, _ longtitude: Double, _ completionHandlerForPostStudentLocation: @escaping (_ success: Bool,  _ error: NSError?) -> Void) {
         
         /* 1. Specify the HTTP body */
-        let jsonBody = "{\"\(JSONBodyKeys.UniqueKey)\": \"\(userUniqueKey)\", \"\(JSONBodyKeys.FirstName)\": \"\(UserLocation.firstName)\", \"\(JSONBodyKeys.LastName)\": \"\(UserLocation.lastName)\",\"\(JSONBodyKeys.MapString)\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"\(JSONBodyKeys.Latitude)\": \(latitude), \"longitude\": \(longtitude)}"
+        let jsonBody = "{\"\(JSONBodyKeys.UniqueKey)\": \"\(userUniqueKey)\", \"\(JSONBodyKeys.FirstName)\": \"\(UserLocation.firstName!)\", \"\(JSONBodyKeys.LastName)\": \"\(UserLocation.lastName!)\",\"\(JSONBodyKeys.MapString)\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"\(JSONBodyKeys.Latitude)\": \(latitude), \"longitude\": \(longtitude)}"
+        
+        print("JSONBody: \(jsonBody)")
         
         /* 2. Make the request */
         let _ = taskForPOSTMethod(Methods.StudentLocation, jsonBody: jsonBody, completionHandlerForPOST: {(result, error) in

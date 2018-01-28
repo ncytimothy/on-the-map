@@ -355,6 +355,7 @@
                         <viewLayoutGuide key="safeArea" id="Q0J-kq-rdc"/>
                     </view>
                     <connections>
+                        <outlet property="finishButton" destination="gqo-p6-0qf" id="VqP-aI-iYH"/>
                         <outlet property="mapView" destination="cZ7-IR-voQ" id="8sa-Pd-E9E"/>
                     </connections>
                 </viewController>

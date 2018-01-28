@@ -17,10 +17,13 @@ class LocationOnMapViewController: UIViewController, MKMapViewDelegate {
     var userMediaURL: String!
     var userLongitude: Double!
     var userLatitude: Double!
+    let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+   
     
     
     // MARK: Outlet
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var finishButton: UIButton!
     
     // MARK: Life cycle
     
@@ -29,17 +32,21 @@ class LocationOnMapViewController: UIViewController, MKMapViewDelegate {
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = userLocationString
         
         let localSearch = MKLocalSearch(request: request)
-        localSearch.start(completionHandler:{(response, error) in
+        localSearch.start(completionHandler:{(response, error) in performUIUpdatesOnMain {
             
             if let error = error {
+                self.finishButton.isEnabled = false
+                self.finishButton.alpha = 0.5
                 self.presentAlert("Cannot Find Location", "Cannot find location, please try again.", "OK")
             }
+            
+            self.presentLoadingAlert()
             
             if let mapItems = response?.mapItems {
                 if let mapItem = mapItems.first {
@@ -51,25 +58,32 @@ class LocationOnMapViewController: UIViewController, MKMapViewDelegate {
                     self.mapView.addAnnotation(annotation)
                     let region = MKCoordinateRegion(center: annotation.coordinate, span: MKCoordinateSpanMake(0.005, 0.005))
                     self.mapView.region = region
+                    self.alert.dismiss(animated: true, completion: nil)
                 }
             }
-        })
-    }
+            
+        }
+    })
+}
     
     // MARK: Actions
     
     @IBAction func pressFinish(_ sender: Any) {
         
-        if UserLocation == nil {
+        print("UserLocation.objectID: \(UserLocation.objectID)")
+        
+        if UserLocation.objectID == nil {
             ParseClient.sharedInstance().postStudentLocation(userLocationString, userMediaURL, userLatitude, userLongitude, {(success, error) in performUIUpdatesOnMain {
                 
                 if success {
                         print("Post Location Success!")
-                        let mapViewVC = self.storyboard?.instantiateViewController(withIdentifier: "mapViewVC") as! MapViewController
-                        self.navigationController?.popToViewController(mapViewVC, animated: true)
-                    }
+                        self.navigationController?.popToRootViewController(animated: true)
+                } else {
+                        print("Post Location Unsuccessful.")
+                        self.presentAlert("Cannot Post Location", "Post location unsuccessful", "Dismiss")
                 }
-            })
+            }
+        })
         } else {
             
             ParseClient.sharedInstance().putStudentLocation(userLocationString, userMediaURL, userLatitude, userLongitude, {(success, error) in performUIUpdatesOnMain {
@@ -77,7 +91,7 @@ class LocationOnMapViewController: UIViewController, MKMapViewDelegate {
                         print("Put Location Success!")
                         self.navigationController?.popToRootViewController(animated: true)
                     } else {
-                        self.presentAlert("Cannot Post Location", "Post location unsuccessful, please try again.", "Dismiss")
+                        self.presentAlert("Cannot Update Location", "Update location unsuccessful, please try again.", "Dismiss")
                     }
                 }
             })
@@ -120,7 +134,7 @@ private extension LocationOnMapViewController {
     }
     
     private func presentLoadingAlert() {
-        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+      
         
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
         loadingIndicator.hidesWhenStopped = true
