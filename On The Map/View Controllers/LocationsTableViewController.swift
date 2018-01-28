@@ -97,13 +97,13 @@ class LocationsTableViewController: UITableViewController {
     
     // MARK: UITableViewDelegate Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StudentLocations.count
+        return SharedData.sharedInstance.StudentLocations.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentCell") as! LocationsTableViewCell
-        let information = StudentLocations[(indexPath as NSIndexPath).row]
+        let information = SharedData.sharedInstance.StudentLocations[(indexPath as NSIndexPath).row]
         
         if let firstName = information.firstName, let lastName = information.lastName {
             cell.nameLabel?.text = firstName + " " + lastName
@@ -117,7 +117,7 @@ class LocationsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let information = StudentLocations[(indexPath as NSIndexPath).row]
+        let information = SharedData.sharedInstance.StudentLocations[(indexPath as NSIndexPath).row]
         if let mediaURL = information.mediaURL, let url = URL(string: mediaURL) {
             if url.scheme != "https" {
                 presentAlert("", "Invalid URL", "Dismiss")

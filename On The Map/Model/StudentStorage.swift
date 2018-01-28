@@ -9,13 +9,12 @@
 import Foundation
 
 public var userUniqueKey: String = ""
-var StudentLocations = [StudentInformation]()
 var UserLocation = StudentInformation(dictionary: [:])
 
-func sharedInstance() -> StudentInformation {
-    struct Singleton {
-        static var sharedInstance = StudentInformation(dictionary: [:])
-    }
-    return Singleton.sharedInstance
+class SharedData {
+    
+    static let sharedInstance = SharedData()
+    var StudentLocations = [StudentInformation]()
+    private init() {}
+    
 }
-

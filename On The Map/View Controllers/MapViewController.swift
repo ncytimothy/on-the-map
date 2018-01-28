@@ -81,7 +81,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotations.removeAll()
         }
         
-        let locations = StudentLocations
+        let locations = SharedData.sharedInstance.StudentLocations
         
         for information in locations {
             

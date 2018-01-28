@@ -27,7 +27,7 @@ extension ParseClient {
                 if let result = result?["results"] as? [[String:AnyObject]] {
 //                    print("result: \(result)")
                     let locations = StudentInformation.studentLocationsFromResults(result)
-                    StudentLocations = locations
+                    SharedData.sharedInstance.StudentLocations = locations
                     completionHandlerForStudentLoc(true, locations, nil)
                 } else {
                     print("Cannot parse JSON!")
