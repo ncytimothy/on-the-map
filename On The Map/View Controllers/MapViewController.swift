@@ -18,9 +18,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     var annotations = [MKPointAnnotation]()
     let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-    
-    
-    // MARK: Life cycle
+ 
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,9 +68,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     })
 }
     
-    
-
-    
     func reloadMapView() {
     
         print("reloadMapView called")
@@ -80,6 +76,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             mapView.removeAnnotations(annotations)
             annotations.removeAll()
         }
+        
         
         let locations = SharedData.sharedInstance.StudentLocations
         
@@ -95,9 +92,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 // The lat and long are used to create a CLLocationCoordinates2D instance.
                 let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
                 
-                let first = information.firstName!
-                let last = information.lastName!
-                let mediaURL = information.mediaURL!
+                let first = information.firstName ?? "First Name"
+                let last = information.lastName ?? "Last Name"
+                let mediaURL = information.mediaURL ?? "https:/www.ucla.edu"
                 
                 // Here we create the annotation and set its coordiate, title, and subtitle properties
                 let annotation = MKPointAnnotation()
@@ -138,6 +135,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
             return pinView
     }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("I love Ver!")
+        print("\(view.annotation?.coordinate)")
+    }
+    
     
    
     
